@@ -38,7 +38,7 @@ export const getEventsByLocation = query({
       events = events.filter(e => e.city.toLowerCase() === args.city?.toLowerCase())
     }
 
-    if (args.city) {
+    if (args.state) {
       events = events.filter(e => e.state?.toLowerCase() === args.state?.toLowerCase())
     }
 

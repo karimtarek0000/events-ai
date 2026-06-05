@@ -7,8 +7,8 @@ export default async function Page() {
   return (
     <>
       <FeaturedCarouesel />
-      <FeaturedEvents />
       <NearbyEvents />
+      <FeaturedEvents />
       <PopularEvents />
     </>
   )
