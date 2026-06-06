@@ -3,7 +3,7 @@ import { Id } from '@/convex/_generated/dataModel'
 import Image from 'next/image'
 import Link from 'next/link'
 
-type Event = {
+export type Event = {
   _id: Id<'events'>
   title: string
   city: string

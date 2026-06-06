@@ -1,68 +1,9 @@
-'use client'
-
-import { Card } from '@/components/ui/card'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-} from '@/components/ui/carousel'
 import { api } from '@/convex/_generated/api'
-import { useQuery } from 'convex/react'
-import Image from 'next/image'
+import { preloadQuery } from 'convex/nextjs'
+import EventsList from './EventsList'
 
-function FeaturedCarouesel() {
-  const events = useQuery(api.events.getFeaturedEvents, {
-    limit: 6,
-  })
+export default async function FeaturedCarouesel() {
+  const events = await preloadQuery(api.events.getFeaturedEvents, { limit: 4 })
 
-  if (!events) return null
-
-  return (
-    <section className="space-y-6 w-full">
-      <h2 className="text-2xl font-bold my-8">Explore Events</h2>
-
-      <Carousel
-        opts={{
-          align: 'start',
-        }}
-        className="w-full"
-      >
-        <CarouselContent className="-ml-2 md:-ml-4">
-          {events.map(event => (
-            <CarouselItem key={event._id} className="basis-full">
-              <Card className="overflow-hidden">
-                {/* IMAGE */}
-                <div className="relative h-105 w-full">
-                  <Image
-                    src={event.coverImage || '/placeholder-event.jpg'}
-                    alt={event.title}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent" />
-
-                  {/* TEXT */}
-                  <div className="absolute bottom-0 p-6 text-white space-y-2">
-                    <h3 className="text-2xl font-bold">{event.title}</h3>
-                    <p className="text-sm opacity-90">
-                      📍 {event.city}, {event.country}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-    </section>
-  )
+  return <EventsList preloadedEvents={events} title="Featured Events" slider />
 }
-
-export default FeaturedCarouesel
