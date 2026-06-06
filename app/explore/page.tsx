@@ -1,4 +1,6 @@
 import { Suspense } from 'react'
+
+import ErrorBoundry from '../components/error/ErrorBoundry'
 import FeaturedCarouesel from '../components/features/FeaturedCarouesel'
 import FeaturedEvents from '../components/features/FeaturedEvents'
 import NearbyEvents from '../components/features/NearbyEvents'
@@ -9,18 +11,29 @@ import EventsSkeleton from '../components/skeleton/EventsSkeleton'
 export default async function Page() {
   return (
     <>
-      <Suspense fallback={<CarousalEventsSkeleton />}>
-        <FeaturedCarouesel />
-      </Suspense>
-      <Suspense fallback={<EventsSkeleton />}>
-        <NearbyEvents />
-      </Suspense>
-      <Suspense fallback={<EventsSkeleton />}>
-        <FeaturedEvents />
-      </Suspense>
-      <Suspense fallback={<EventsSkeleton />}>
-        <PopularEvents />
-      </Suspense>
+      <ErrorBoundry>
+        <Suspense fallback={<CarousalEventsSkeleton />}>
+          <FeaturedCarouesel />
+        </Suspense>
+      </ErrorBoundry>
+
+      <ErrorBoundry>
+        <Suspense fallback={<EventsSkeleton />}>
+          <NearbyEvents />
+        </Suspense>
+      </ErrorBoundry>
+
+      <ErrorBoundry>
+        <Suspense fallback={<EventsSkeleton />}>
+          <FeaturedEvents />
+        </Suspense>
+      </ErrorBoundry>
+
+      <ErrorBoundry>
+        <Suspense fallback={<EventsSkeleton />}>
+          <PopularEvents />
+        </Suspense>
+      </ErrorBoundry>
     </>
   )
 }
