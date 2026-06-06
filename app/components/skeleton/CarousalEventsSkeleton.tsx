@@ -4,7 +4,7 @@ function ExploreEventsSkeleton() {
       {/* Main card — full width */}
       <div className="relative w-full mt-5 rounded-2xl overflow-hidden">
         {/* Image */}
-        <div className="w-full h-[420px] bg-[#2c2c2e] animate-pulse" />
+        <div className="w-full h-105 bg-[#2c2c2e] animate-pulse" />
 
         {/* Overlay content at bottom */}
         <div className="absolute bottom-0 left-0 right-0 p-6 space-y-3">
