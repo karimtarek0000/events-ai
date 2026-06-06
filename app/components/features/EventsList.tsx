@@ -11,7 +11,7 @@ interface EventsListProps {
     | Preloaded<typeof api.events.getFeaturedEvents>
     | Preloaded<typeof api.events.getPopularEvents>
   title: string
-  slider: boolean
+  slider?: boolean
 }
 
 const EventsList = ({ title, preloadedEvents, slider }: EventsListProps) => {

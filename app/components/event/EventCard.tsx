@@ -16,7 +16,7 @@ export type Event = {
 
 const EventCard = ({ event }: { event: Event }) => {
   return (
-    <Card className="hover:shadow-lg transition flex flex-col h-full">
+    <Card className="hover:shadow-lg p-0 transition flex flex-col h-full">
       <Link
         href={`/events/${event._id}`}
         className="block relative h-44 w-full bg-muted overflow-hidden rounded-t-xl"
@@ -24,7 +24,9 @@ const EventCard = ({ event }: { event: Event }) => {
         <Image
           src={event.coverImage || '/placeholder-event.jpg'}
           alt={event.title}
+          loading="lazy"
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover hover:scale-105 transition-transform duration-500"
         />
       </Link>
