@@ -6,6 +6,7 @@ import { api } from '@/convex/_generated/api'
 import { EventFormValues, eventSchema, FormInput, FormOutput } from '@/validations/events.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from 'convex/react'
+import { ConvexError } from 'convex/values'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
@@ -46,7 +47,14 @@ export default function CreateEventForm() {
 
         router.push('/')
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to create event')
+        const errorMessage =
+          err instanceof ConvexError
+            ? (err.data as string)
+            : err instanceof Error
+              ? err.message
+              : 'Failed to create event'
+
+        setError(errorMessage)
       }
     })
   }
@@ -62,7 +70,7 @@ export default function CreateEventForm() {
           <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {error && (
-                <div className="bg-destructive/10 text-destructive px-4 py-3 rounded-md">
+                <div className="bg-destructive/10 text-center text-destructive px-4 py-3 rounded-md">
                   {error}
                 </div>
               )}
