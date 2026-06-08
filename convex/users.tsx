@@ -1,4 +1,5 @@
-import { mutation, query } from './_generated/server'
+import { ConvexError, v } from 'convex/values'
+import { internalMutation, mutation, query } from './_generated/server'
 
 export const store = mutation({
   args: {},
@@ -27,6 +28,7 @@ export const store = mutation({
 
     // If it's a new identity, create a new `User`.
     return await ctx.db.insert('users', {
+      clerkId: identity.subject,
       name: identity.name ?? 'Anonymous',
       tokenIdentifier: identity.tokenIdentifier,
       imageUrl: identity.pictureUrl ?? '',
@@ -37,14 +39,33 @@ export const store = mutation({
   },
 })
 
-export const getCurrentUser = query({
+export const changeUserPlan = mutation({
+  args: {
+    clerkId: v.string(),
+    plan: v.union(v.literal('free'), v.literal('starter'), v.literal('pro'), v.literal('max')),
+  },
   handler: async (ctx, args) => {
+    const user = await ctx.db
+      .query('users')
+      .withIndex('by_clerk_id', q => q.eq('clerkId', args.clerkId))
+      .unique()
+
+    if (!user) throw new ConvexError('User not found')
+
+    if (user.plan !== args.plan) {
+      await ctx.db.patch(user._id, { plan: args.plan })
+    }
+  },
+})
+
+export const getCurrentUser = query({
+  handler: async ctx => {
     const identity = await ctx.auth.getUserIdentity()
     if (!identity) {
       throw new Error('Called storeUser without authentication present')
     }
 
-    const user = await ctx.db
+    await ctx.db
       .query('users')
       .withIndex('token', q => q.eq('tokenIdentifier', identity.tokenIdentifier))
       .unique()

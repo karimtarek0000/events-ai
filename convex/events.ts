@@ -1,5 +1,6 @@
-import { v } from 'convex/values'
+import { ConvexError, v } from 'convex/values'
 import { mutation, query } from './_generated/server'
+import { PLANS, Plans } from '../config'
 
 // Query
 export const getFeaturedEvents = query({
@@ -164,7 +165,7 @@ export const deleteEvent = mutation({
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity()
     if (!identity) {
-      throw new Error('Unauthenticated')
+      throw new ConvexError('Unauthenticated')
     }
 
     const user = await ctx.db
@@ -173,17 +174,17 @@ export const deleteEvent = mutation({
       .unique()
 
     if (!user) {
-      throw new Error('User not found')
+      throw new ConvexError('User not found')
     }
 
     const event = await ctx.db.get(args.eventId)
     if (!event) {
-      throw new Error('Event not found')
+      throw new ConvexError('Event not found')
     }
 
     // Verify ownership
     if (event.organizerId !== user._id) {
-      throw new Error('You are not authorized to delete this event')
+      throw new ConvexError('You are not authorized to delete this event')
     }
 
     // Delete the event
@@ -224,7 +225,7 @@ export const create = mutation({
     /* ---------- AUTH ---------- */
     const identity = await ctx.auth.getUserIdentity()
     if (!identity) {
-      throw new Error('Unauthenticated')
+      throw new ConvexError('Unauthenticated')
     }
 
     /* ---------- USER ---------- */
@@ -234,37 +235,31 @@ export const create = mutation({
       .unique()
 
     if (!user) {
-      throw new Error('User not found')
+      throw new ConvexError('User not found')
     }
 
     /* ---------- PLAN CHECK ---------- */
-    type Plans = 'starter' | 'pro' | 'max'
-    const PLANS = {
-      starter: 'starter',
-      pro: 'pro',
-      max: 'max',
-    } as const
 
     const plan = PLANS[user.plan as Plans] ?? 'free'
 
     if (plan && user.freeEventsCreated > 1) {
-      throw new Error('Free plan allows only 1 event')
+      throw new ConvexError('Free plan allows only 1 event')
     }
 
     if (plan === 'starter' && user.freeEventsCreated > 3) {
-      throw new Error('Starter plan allows only 3 event')
+      throw new ConvexError('Starter plan allows only 3 event')
     }
 
     if (plan === 'pro' && user.freeEventsCreated > 10) {
-      throw new Error('Pro plan allows only 10 event')
+      throw new ConvexError('Pro plan allows only 10 event')
     }
 
     if ((plan === 'starter' || plan) && args.ticketType === 'paid') {
-      throw new Error('Paid events require at least Pro plan')
+      throw new ConvexError('Paid events require at least Pro plan')
     }
 
     if (plan === 'max' && args.themeColor) {
-      throw new Error('Custom theme color requires Max plan')
+      throw new ConvexError('Custom theme color requires Max plan')
     }
 
     /* ---------- SLUG ---------- */
@@ -315,7 +310,7 @@ export const create = mutation({
     })
 
     /* ---------- UPDATE COUNTER ---------- */
-    if (plan !== "max") {
+    if (plan !== 'max') {
       await ctx.db.patch(user._id, {
         freeEventsCreated: user.freeEventsCreated + 1,
       })

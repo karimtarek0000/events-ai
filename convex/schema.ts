@@ -3,8 +3,9 @@ import { v } from 'convex/values'
 
 export default defineSchema({
   users: defineTable({
+    clerkId: v.string(),
     name: v.string(),
-    tokenIdentifier: v.string(), // Token getting from Clerk
+    tokenIdentifier: v.string(),
     email: v.string(),
     imageUrl: v.string(),
     hasCompletedOnboarding: v.boolean(),
@@ -20,7 +21,9 @@ export default defineSchema({
     plan: v.optional(
       v.union(v.literal('free'), v.literal('starter'), v.literal('pro'), v.literal('max')),
     ),
-  }).index('token', ['tokenIdentifier']),
+  })
+    .index('token', ['tokenIdentifier'])
+    .index('by_clerk_id', ['clerkId']),
 
   events: defineTable({
     title: v.string(),
