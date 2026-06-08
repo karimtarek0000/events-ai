@@ -123,6 +123,7 @@ export const seedEvents = internalMutation({
           state: 'Istanbul',
           country: 'Turkey',
         },
+        plan: "free",
         interests: ['tech', 'business', 'health'],
         freeEventsCreated: 0,
       })

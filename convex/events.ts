@@ -238,24 +238,34 @@ export const create = mutation({
     }
 
     /* ---------- PLAN CHECK ---------- */
-    const plan = user.plan ?? 'free'
-    const isPro = plan === 'pro' || plan === 'starter'
+    type Plans = 'starter' | 'pro' | 'max'
+    const PLANS = {
+      starter: 'starter',
+      pro: 'pro',
+      max: 'max',
+    } as const
 
-    // Free users: only 1 event
+    const plan = PLANS[user.plan as Plans] ?? 'free'
 
-    // Free users: only 1 event
-    // if (!isPro && user.freeEventsCreated >= 1) {
-    //   throw new Error('Free plan allows only 1 event')
-    // }
+    if (plan && user.freeEventsCreated > 1) {
+      throw new Error('Free plan allows only 1 event')
+    }
 
-    // // Optional feature guards
-    // if (!isPro && args.ticketType === 'paid') {
-    //   throw new Error('Paid events require Pro plan')
-    // }
+    if (plan === 'starter' && user.freeEventsCreated > 3) {
+      throw new Error('Starter plan allows only 3 event')
+    }
 
-    // if (!isPro && args.themeColor) {
-    //   throw new Error('Custom theme color requires Pro plan')
-    // }
+    if (plan === 'pro' && user.freeEventsCreated > 10) {
+      throw new Error('Pro plan allows only 10 event')
+    }
+
+    if ((plan === 'starter' || plan) && args.ticketType === 'paid') {
+      throw new Error('Paid events require at least Pro plan')
+    }
+
+    if (plan === 'max' && args.themeColor) {
+      throw new Error('Custom theme color requires Max plan')
+    }
 
     /* ---------- SLUG ---------- */
     const slug =
@@ -298,18 +308,18 @@ export const create = mutation({
       registrationCount: 0,
 
       coverImage: args.coverImage,
-      themeColor: isPro ? args.themeColor : undefined,
+      themeColor: plan === 'max' ? args.themeColor : undefined,
 
       createdAt: now,
       updatedAt: now,
     })
 
     /* ---------- UPDATE COUNTER ---------- */
-    // if (!isPro) {
-    //   await ctx.db.patch(user._id, {
-    //     freeEventsCreated: user.freeEventsCreated + 1,
-    //   })
-    // }
+    if (plan !== "max") {
+      await ctx.db.patch(user._id, {
+        freeEventsCreated: user.freeEventsCreated + 1,
+      })
+    }
 
     return eventId
   },

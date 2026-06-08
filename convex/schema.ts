@@ -17,6 +17,9 @@ export default defineSchema({
     ),
     interests: v.optional(v.array(v.string())),
     freeEventsCreated: v.number(),
+    plan: v.optional(
+      v.union(v.literal('free'), v.literal('starter'), v.literal('pro'), v.literal('max')),
+    ),
   }).index('token', ['tokenIdentifier']),
 
   events: defineTable({
