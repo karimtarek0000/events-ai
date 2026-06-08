@@ -1,5 +1,6 @@
 'use client'
 
+import { useUser } from '@clerk/nextjs'
 import { useQuery } from 'convex/react'
 import { PropsWithChildren } from 'react'
 import { api } from '../../convex/_generated/api'
@@ -19,7 +20,7 @@ interface ExceedLimitProps extends PropsWithChildren {
 const ExceedLimit = ({ plan, children }: ExceedLimitProps) => {
   const eventsCount = useQuery(api.events.getMyEventsCount) || 0
 
-  if (!eventsCount) return
+  // if (!eventsCount) return
 
   const exceededLimit = eventsCount >= PLANS_Limits[plan]
 
