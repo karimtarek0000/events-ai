@@ -9,7 +9,7 @@ import Link from 'next/link'
 import { BarLoader } from 'react-spinners'
 
 export default function Header() {
-  const { isLoading } = useStoreUserEffect()
+  const { isLoading, isAuthenticated } = useStoreUserEffect()
 
   return (
     <header className="fixed top-0 inset-x-0 z-50 border-b p-3 border-white/10 bg-black/80 backdrop-blur-md">
@@ -54,13 +54,11 @@ export default function Header() {
           <Link href="/explore" className="hidden sm:block hover:text-white">
             Explore
           </Link>
-          <Link href="/create-event" className="hidden sm:block hover:text-white">
-            Create Event
-          </Link>
-          <Link href="/ai-event-generator" className="hidden sm:block hover:text-white">
-            AI Event
-          </Link>
-
+          {isAuthenticated && (
+            <Link href="/create-event" className="hidden sm:block hover:text-white">
+              Create Event
+            </Link>
+          )}
           <Show when="signed-out">
             <SignInButton>
               <Button
