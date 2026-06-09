@@ -60,7 +60,7 @@ export default function CreateEventForm() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-25">
+    <div className="max-w-4xl mx-auto px-4 py-5">
       <Card>
         <CardHeader>
           <CardTitle>Create New Event</CardTitle>
