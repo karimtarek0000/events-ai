@@ -20,8 +20,8 @@ function FeaturedCaroueselCard({ events }: { events: Event[] }) {
         }}
         className="w-full"
       >
-        <CarouselContent className="-ml-2 md:-ml-4 overflow-x-hidden">
-          {events.map(event => (
+        <CarouselContent className="-ml-2 md:-ml-4">
+          {events.map((event, i) => (
             <CarouselItem key={event._id} className="basis-full">
               <Card className="overflow-hidden p-0">
                 {/* IMAGE */}
@@ -31,7 +31,7 @@ function FeaturedCaroueselCard({ events }: { events: Event[] }) {
                     alt={event.title}
                     fill
                     className="object-cover"
-                    priority
+                    loading={i == 0 ? 'eager' : 'lazy'}
                   />
 
                   {/* Overlay */}
