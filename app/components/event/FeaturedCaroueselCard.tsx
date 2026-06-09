@@ -13,19 +13,17 @@ import { Event } from './EventCard'
 
 function FeaturedCaroueselCard({ events }: { events: Event[] }) {
   return (
-    <section className="space-y-6 w-full">
-      <h2 className="text-2xl font-bold my-8">Explore Events</h2>
-
+    <section className="space-y-6 w-full ">
       <Carousel
         opts={{
           align: 'start',
         }}
         className="w-full"
       >
-        <CarouselContent className="-ml-2 md:-ml-4">
+        <CarouselContent className="-ml-2 md:-ml-4 overflow-x-hidden">
           {events.map(event => (
             <CarouselItem key={event._id} className="basis-full">
-              <Card className="overflow-hidden">
+              <Card className="overflow-hidden p-0">
                 {/* IMAGE */}
                 <div className="relative h-105 w-full">
                   <Image
@@ -51,8 +49,8 @@ function FeaturedCaroueselCard({ events }: { events: Event[] }) {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious className="max-sm:hidden" />
+        <CarouselNext className="max-sm:hidden" />
       </Carousel>
     </section>
   )

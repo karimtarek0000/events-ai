@@ -5,5 +5,10 @@ import EventsList from './EventsList'
 export default async function NearbyEvents() {
   const events = await preloadQuery(api.events.getEventsByLocation, { limit: 4 })
 
-  return <EventsList preloadedEvents={events} title="Nearby Events" />
+  return (
+    <>
+      <h2 className="text-2xl font-bold my-8">⭐ Nearby Events</h2>
+      <EventsList preloadedEvents={events} />
+    </>
+  )
 }

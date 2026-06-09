@@ -15,18 +15,18 @@ export const metadata: Metadata = {
   keywords: [
     'event',
     'discovery',
-    'AI',
     'recommendations',
     'management',
     'event management',
     'event discovery',
-    'AI-powered',
   ],
 }
 
 export default async function Page() {
   return (
     <>
+      <h1 className="text-3xl text-center my-10">Explore all new events</h1>
+
       <ErrorBoundry>
         <Suspense fallback={<CarousalEventsSkeleton />}>
           <FeaturedCarouesel />

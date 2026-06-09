@@ -5,5 +5,10 @@ import EventsList from './EventsList'
 export default async function PopularEvents() {
   const events = await preloadQuery(api.events.getPopularEvents, { limit: 4 })
 
-  return <EventsList preloadedEvents={events} title="Popular Events" />
+  return (
+    <>
+      <h2 className="text-2xl font-bold my-8">⭐ Popular Events</h2>
+      <EventsList preloadedEvents={events} />
+    </>
+  )
 }

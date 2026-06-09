@@ -5,5 +5,10 @@ import EventsList from './EventsList'
 export default async function FeaturedCarouesel() {
   const events = await preloadQuery(api.events.getFeaturedEvents, { limit: 4 })
 
-  return <EventsList preloadedEvents={events} title="Featured Events" slider />
+  return (
+    <>
+      <h2 className="text-2xl font-bold my-8">⭐ Featured Events</h2>
+      <EventsList preloadedEvents={events} slider />
+    </>
+  )
 }

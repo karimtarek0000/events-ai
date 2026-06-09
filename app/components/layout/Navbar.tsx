@@ -11,7 +11,7 @@ export default async function Header() {
   const { userId } = await auth()
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 border-b p-3 border-white/10 bg-black/80 backdrop-blur-md">
+    <nav className="border-b p-3 border-white/10 bg-black/80 backdrop-blur-md">
       <LoadingBarAuth />
 
       <div className="mx-auto max-w-7xl px-4 h-16 flex items-center justify-between gap-4">
@@ -70,6 +70,6 @@ export default async function Header() {
           <UserMenu />
         </nav>
       </div>
-    </header>
+    </nav>
   )
 }
