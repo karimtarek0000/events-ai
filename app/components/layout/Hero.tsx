@@ -3,23 +3,20 @@ import Image from 'next/image'
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden h-screen flex items-center">
       {/* Background gradients */}
-
       <div className="mx-auto max-w-7xl px-6 py-28 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* LEFT CONTENT */}
-        <div>
+        <div className="max-lg:text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
-            Create Your Own <br />
-            AI Powered{' '}
-            <span className="bg-linear-to-r from-blue-400 to-pink-500 bg-clip-text text-transparent">
-              Event
+            Create and launch your
+            <span className="px-2 bg-linear-to-r from-blue-400 to-pink-500 bg-clip-text text-transparent">
+              Event in minutes
             </span>
           </h1>
 
-          <p className="mt-6 text-white/60 max-w-md">
-            Whether you are hosting or attending, AI Events Generator makes every event memorable.
-            Join our community today.
+          <p className="mt-6 text-white/60">
+            Whether you are hosting or attending, every event memorable. Join our community today.
           </p>
 
           <div className="mt-8">

@@ -67,7 +67,7 @@ export default function RootLayout({
               enableSystem={false}
               disableTransitionOnChange
             >
-              <main className="relative min-h-screen container mx-auto pt-40">
+              <main className="relative container mx-auto">
                 {children}
 
                 <div className="pointer-events-none absolute -left-16 top-8 w-72 h-72 rounded-full opacity-80 bg-linear-to-tr from-blue-400 via-blue-300 to-transparent blur-[80px] -z-10" />

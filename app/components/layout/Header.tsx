@@ -47,18 +47,20 @@ export default function Header() {
         </div>
 
         {/* Right links */}
-        <nav className="flex items-center gap-4 text-sm text-white/80">
+        <nav className="flex min-w-61.75 items-center gap-4 text-sm text-white/80">
           <Link href="/pricing" className="hidden sm:block hover:text-white">
             Pricing
           </Link>
           <Link href="/explore" className="hidden sm:block hover:text-white">
             Explore
           </Link>
-          {isAuthenticated && (
-            <Link href="/create-event" className="hidden sm:block hover:text-white">
-              Create Event
-            </Link>
-          )}
+          <div className="min-w-20.75">
+            {isAuthenticated && (
+              <Link href="/create-event" className="hidden sm:block hover:text-white">
+                Create Event
+              </Link>
+            )}
+          </div>
           <Show when="signed-out">
             <SignInButton>
               <Button
