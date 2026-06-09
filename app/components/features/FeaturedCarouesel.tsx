@@ -7,7 +7,6 @@ export default async function FeaturedCarouesel() {
 
   return (
     <>
-      <h2 className="text-2xl font-bold my-8">⭐ Featured Events</h2>
       <EventsList preloadedEvents={events} slider />
     </>
   )
