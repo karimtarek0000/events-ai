@@ -3,7 +3,7 @@ import { cn } from '@/lib/utils'
 import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Figtree, Geist, Geist_Mono } from 'next/font/google'
-import Header from './components/layout/Header'
+import Header from './components/layout/Navbar'
 import './globals.css'
 import { ConvexClientProvider } from './providers/ConvexClientProvider'
 

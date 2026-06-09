@@ -1,99 +1,44 @@
-'use client'
-
-import { Button } from '@/components/ui/button'
-import { useStoreUserEffect } from '@/hooks/userStore'
-import { Show, SignInButton, SignUpButton, UserButton } from '@clerk/nextjs'
-import { Calendar, Search, TicketCheck } from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
-import { BarLoader } from 'react-spinners'
+import CTAButton from './CTAButton'
 
-export default function Header() {
-  const { isLoading, isAuthenticated } = useStoreUserEffect()
-
+export default function Hero() {
   return (
-    <header className="fixed top-0 inset-x-0 z-50 border-b p-3 border-white/10 bg-black/80 backdrop-blur-md">
-      <div className="absolute bottom-0 left-0 right-0 w-full">
-        {isLoading ? (
-          <BarLoader
-            color="#22c55e"
-            height={3}
-            width={1000}
-            cssOverride={{ width: '100%', display: 'block' }}
-          />
-        ) : null}
-      </div>
+    <section className="relative overflow-hidden h-screen flex items-center">
+      {/* Background gradients */}
+      <div className="mx-auto max-w-7xl px-6 py-28 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        {/* LEFT CONTENT */}
+        <div className="max-lg:text-center">
+          <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
+            Create and launch your
+            <span className="px-2 bg-linear-to-r from-blue-400 to-pink-500 bg-clip-text text-transparent">
+              Event in minutes
+            </span>
+          </h1>
 
-      <div className="mx-auto max-w-7xl px-4 h-16 flex items-center justify-between gap-4">
-        {/* Logo */}
-        <Link href="/">
-          <Image loading="eager" alt="image" width={90} height={90} src="/logo.png" />
-        </Link>
+          <p className="mt-6 text-white/60">
+            Whether you are hosting or attending, every event memorable. Join our community today.
+          </p>
 
-        {/* Search + Filters (desktop only) */}
-        <div className="hidden md:flex flex-1 max-w-xl items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 h-10">
-          <Search className="w-4 h-4 text-white/60" />
-
-          <input
-            placeholder="Search events..."
-            className="bg-transparent flex-1 text-sm text-white placeholder:text-white/40 outline-none"
-          />
-
-          <div className="flex items-center gap-2 text-sm text-white/70">
-            <button className="hover:text-white">State</button>
-            <span>/</span>
-            <button className="hover:text-white">City</button>
-          </div>
+          <CTAButton />
         </div>
 
-        {/* Right links */}
-        <nav className="flex min-w-61.75 items-center gap-4 text-sm text-white/80">
-          <Link href="/pricing" className="hidden sm:block hover:text-white">
-            Pricing
-          </Link>
-          <Link href="/explore" className="hidden sm:block hover:text-white">
-            Explore
-          </Link>
-          <div className="min-w-20.75">
-            {isAuthenticated && (
-              <Link href="/create-event" className="hidden sm:block hover:text-white">
-                Create Event
-              </Link>
-            )}
+        {/* RIGHT IMAGE */}
+        <div className="relative flex justify-center">
+          <div className="relative w-70 md:w-85">
+            <Image
+              src="/hero.png"
+              alt="Event App Preview"
+              width={400}
+              height={800}
+              className="relative z-10"
+              priority
+            />
+
+            {/* Glow behind phone */}
+            <div className="absolute inset-0 rounded-full bg-red-500/40 blur-[120px] -z-10" />
           </div>
-          <Show when="signed-out">
-            <SignInButton>
-              <Button
-                variant="outline"
-                className="bg-transparent text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer"
-              >
-                Signin
-              </Button>
-            </SignInButton>
-            <SignUpButton>
-              <Button className=" rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
-                Sign Up
-              </Button>
-            </SignUpButton>
-          </Show>
-          <Show when="signed-in">
-            <UserButton>
-              <UserButton.MenuItems>
-                <UserButton.Link
-                  label="My Events"
-                  labelIcon={<Calendar size="1rem" />}
-                  href="/my-events"
-                />
-                <UserButton.Link
-                  label="My Tickets"
-                  labelIcon={<TicketCheck size="1rem" />}
-                  href="/my-tickets"
-                />
-              </UserButton.MenuItems>
-            </UserButton>
-          </Show>
-        </nav>
+        </div>
       </div>
-    </header>
+    </section>
   )
 }
