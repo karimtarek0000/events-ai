@@ -1,5 +1,3 @@
-// 'use client'
-
 import { Button } from '@/components/ui/button'
 import { Show, SignInButton, SignUpButton } from '@clerk/nextjs'
 import { auth } from '@clerk/nextjs/server'

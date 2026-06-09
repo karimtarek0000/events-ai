@@ -30,7 +30,7 @@ export function DateTimeSection() {
 
       <FieldGroup className="flex flex-row justify-between w-full">
         {/* Start */}
-        <FieldGroup className="max-w-xs flex-row">
+        <FieldGroup className="max-w-xs max-md:flex-wrap flex-row">
           <Controller
             control={control}
             name="startDate"
@@ -95,7 +95,7 @@ export function DateTimeSection() {
         </FieldGroup>
 
         {/* End */}
-        <FieldGroup className="max-w-xs flex-row">
+        <FieldGroup className="max-w-xs max-w-xs max-md:flex-wrap flex-row">
           <Controller
             control={control}
             name="endDate"

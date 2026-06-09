@@ -36,7 +36,7 @@ export function CapacitySection() {
           {errors.capacity && <p className="text-sm text-destructive">{errors.capacity.message}</p>}
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2 *:w-full">
           <Label>Ticket Type</Label>
           <Controller
             control={control}

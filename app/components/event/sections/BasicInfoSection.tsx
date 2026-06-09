@@ -42,7 +42,7 @@ export function BasicInfoSection() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-2">
+        <div className="space-y-2 *:w-full">
           <Label>Category</Label>
           <Controller
             control={control}
