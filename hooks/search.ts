@@ -1,8 +1,9 @@
 import { useRouter, useSearchParams } from 'next/navigation'
-import { ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
 import { useDebounce } from './debounce'
 
 export const useSearch = (goTo: string) => {
+  const clearBTN = useRef<HTMLButtonElement>(null)
   const searchParams = useSearchParams()
   const querySearch = searchParams.get('search') as string
   const [search, setSearch] = useState(querySearch || '')
@@ -17,10 +18,10 @@ export const useSearch = (goTo: string) => {
     [router, goTo],
   )
 
-  const searchHandler = useDebounce(
-    (e: ChangeEvent<HTMLInputElement>) => sendQuery(e.target.value),
-    1500,
-  )
+  const searchHandler = useDebounce((e: ChangeEvent<HTMLInputElement>) => {
+    sendQuery(e.target.value)
+    clearBTN.current?.click()
+  }, 1500)
 
   useEffect(() => {
     sendQuery(querySearch)
@@ -28,6 +29,7 @@ export const useSearch = (goTo: string) => {
 
   return {
     search,
+    clearBTN,
     setSearch,
     searchHandler,
   }
