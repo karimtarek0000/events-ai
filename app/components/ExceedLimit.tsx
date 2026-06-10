@@ -20,7 +20,7 @@ interface ExceedLimitProps extends PropsWithChildren {
 const ExceedLimit = ({ plan, children }: ExceedLimitProps) => {
   const eventsCount = useQuery(api.events.getMyEventsCount) || 0
 
-  // if (!eventsCount) return
+  if (eventsCount === undefined) return
 
   const exceededLimit = eventsCount >= PLANS_Limits[plan]
 
