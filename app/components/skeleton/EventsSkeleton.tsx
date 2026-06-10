@@ -31,14 +31,16 @@ function EventCardSkeleton() {
   )
 }
 
-export default function EventsSkeleton() {
+export default function EventsSkeleton({ showHeader = true }: { showHeader?: boolean }) {
   return (
     <div className="min-h-screen p-6">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
-        <div className="size-6 rounded-md bg-[#2c2c2e] animate-pulse" />
-        <div className="h-7 w-40 rounded-lg bg-[#2c2c2e] animate-pulse" />
-      </div>
+      {showHeader && (
+        <div className="flex items-center gap-3 mb-6">
+          <div className="size-6 rounded-md bg-[#2c2c2e] animate-pulse" />
+          <div className="h-7 w-40 rounded-lg bg-[#2c2c2e] animate-pulse" />
+        </div>
+      )}
 
       {/* Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
