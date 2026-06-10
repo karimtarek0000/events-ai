@@ -15,8 +15,6 @@ const SearchBar = () => {
   const sendQuery = useCallback(
     (value: string) => {
       if (value) {
-        console.log(value)
-
         router.push(`/search-events?search=${value}`)
       }
     },
