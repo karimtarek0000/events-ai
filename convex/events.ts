@@ -1,6 +1,6 @@
 import { ConvexError, v } from 'convex/values'
-import { mutation, query } from './_generated/server'
 import { PLANS, Plans } from '../config'
+import { mutation, query } from './_generated/server'
 
 // Query
 export const getFeaturedEvents = query({
@@ -22,25 +22,22 @@ export const getFeaturedEvents = query({
 
 export const getEventsByLocation = query({
   args: {
-    city: v.optional(v.string()),
-    state: v.optional(v.string()),
+    location: v.optional(v.string()),
     limit: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
     const now = Date.now()
-
     let events = await ctx.db
       .query('events')
       .withIndex('by_start_date')
       .filter(q => q.gte(q.field('startDate'), now))
       .collect()
 
-    if (args.city) {
-      events = events.filter(e => e.city.toLowerCase() === args.city?.toLowerCase())
-    }
-
-    if (args.state) {
-      events = events.filter(e => e.state?.toLowerCase() === args.state?.toLowerCase())
+    if (args.location) {
+      const search = args.location.toLowerCase().trim()
+      events = events.filter(
+        e => e.city?.toLowerCase().includes(search) || e.country?.toLowerCase().includes(search),
+      )
     }
 
     return events.slice(0, args.limit ?? 4)
