@@ -4,7 +4,7 @@ import { auth } from '@clerk/nextjs/server'
 import { Search } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import SearchBar from '../SearchBar'
+import SearchBar from '../SearchInput'
 import LoadingBarAuth from './LoadingBarAuth'
 import UserMenu from './UserMenu'
 

@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button'
 import { useSearch } from '@/hooks/search'
 import { Search, X } from 'lucide-react'
 
-const SearchBar = () => {
-  const { search, setSearch, searchHandler } = useSearch('/search-events')
+const SearchInput = () => {
+  const { search, setSearch, searchHandler, clearBTN } = useSearch('/search-events')
 
   return (
     <div className="hidden md:flex flex-1 max-w-xl items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 h-10">
@@ -23,6 +23,7 @@ const SearchBar = () => {
 
       {search && (
         <Button
+          ref={clearBTN}
           onClick={() => setSearch('')}
           className="bg-transparent hover:bg-transparent text-white"
         >
@@ -33,4 +34,4 @@ const SearchBar = () => {
   )
 }
 
-export default SearchBar
+export default SearchInput

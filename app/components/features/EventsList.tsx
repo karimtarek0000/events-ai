@@ -11,13 +11,12 @@ interface EventsListProps {
     | Preloaded<typeof api.events.getEventsByLocation>
     | Preloaded<typeof api.events.getFeaturedEvents>
     | Preloaded<typeof api.events.getPopularEvents>
+    | Preloaded<typeof api.events.getEventsByLocation>
   slider?: boolean
 }
 
 const EventsList = ({ preloadedEvents, slider }: EventsListProps) => {
   const events = usePreloadedQuery(preloadedEvents)
-
-  if (!events) return null
 
   if (slider) {
     return (
@@ -31,7 +30,7 @@ const EventsList = ({ preloadedEvents, slider }: EventsListProps) => {
     <NotFound records={events}>
       <section className="space-y-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {events.map(event => (
+          {events?.map(event => (
             <EventCard key={event._id} event={event} />
           ))}
         </div>
