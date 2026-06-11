@@ -74,26 +74,10 @@ export default defineSchema({
   // Registrations/Tickets
   registrations: defineTable({
     eventId: v.id('events'),
-    userId: v.id('users'),
-
-    // Attendee info
     attendeeName: v.string(),
     attendeeEmail: v.string(),
-
-    // QR Code for entry
-    qrCode: v.string(), // Unique ID for QR
-
-    // Check-in
-    checkedIn: v.boolean(),
-    checkedInAt: v.optional(v.number()),
-
-    // Status
-    status: v.union(v.literal('confirmed'), v.literal('cancelled')),
-
-    registeredAt: v.number(),
+    capacity: v.number(),
   })
     .index('by_event', ['eventId'])
-    .index('by_user', ['userId'])
-    .index('by_event_user', ['eventId', 'userId'])
-    .index('by_qr_code', ['qrCode']),
+    .index('by_event_and_email', ['eventId', 'attendeeEmail']),
 })
