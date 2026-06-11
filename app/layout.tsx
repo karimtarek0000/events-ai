@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils'
 import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from 'next'
 import { Figtree, Geist, Geist_Mono } from 'next/font/google'
+import { Toaster } from 'sonner'
 import Header from './components/layout/Navbar'
 import './globals.css'
 import { ConvexClientProvider } from './providers/ConvexClientProvider'
@@ -73,6 +74,7 @@ export default function RootLayout({
                 <div className="pointer-events-none absolute -left-16 top-8 w-72 h-72 rounded-full opacity-80 bg-linear-to-tr from-blue-400 via-blue-300 to-transparent blur-[80px] -z-10" />
                 <div className="pointer-events-none absolute right-20 top-32 w-96 h-96 rounded-full opacity-80 bg-linear-to-tr from-green-400 via-green-300 to-transparent blur-[100px] -z-10" />
               </main>
+              <Toaster position="top-center" />
             </ThemeProvider>
           </ConvexClientProvider>
         </ClerkProvider>
