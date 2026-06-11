@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { api } from '@/convex/_generated/api'
+import { errorMessageHandle } from '@/utils'
 import { EventFormValues, eventSchema, FormInput, FormOutput } from '@/validations/events.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from 'convex/react'
@@ -47,13 +48,7 @@ export default function CreateEventForm() {
 
         router.push('/')
       } catch (err) {
-        const errorMessage =
-          err instanceof ConvexError
-            ? (err.data as string)
-            : err instanceof Error
-              ? err.message
-              : 'Failed to create event'
-
+        const errorMessage = errorMessageHandle(err)
         setError(errorMessage)
       }
     })
