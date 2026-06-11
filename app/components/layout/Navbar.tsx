@@ -11,7 +11,7 @@ export default async function Header() {
   const { userId } = await auth()
 
   return (
-    <nav className="border-b p-3 border-white/10 bg-black/80 backdrop-blur-md">
+    <nav className="border-b p-3 mb-5 sticky overflow-hidden z-50 inset-0 border-white/10 bg-black/80 backdrop-blur-md">
       <LoadingBarAuth />
 
       <div className="mx-auto max-w-7xl px-4 h-16 flex items-center justify-between gap-4">
