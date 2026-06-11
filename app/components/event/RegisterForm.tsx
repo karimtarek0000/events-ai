@@ -19,11 +19,7 @@ import {
   zodResolver,
 } from './'
 
-interface RegisterFormProps {
-  eventId: Id<'events'>
-}
-
-const RegisterForm = ({ eventId }: RegisterFormProps) => {
+const RegisterForm = ({ eventId }: { eventId: Id<'events'> }) => {
   const [isPending, startTransition] = useTransition()
   const { push } = useRouter()
 
