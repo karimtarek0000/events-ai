@@ -155,6 +155,21 @@ export const getEventByLocation = query({
   },
 })
 
+export const getEvent = mutation({
+  args: {
+    eventId: v.id('events'),
+  },
+  handler: async (ctx, args) => {
+    const event = await ctx.db.get(args.eventId)
+
+    if (!event) {
+      throw new ConvexError('Event with this id not found')
+    }
+
+    return { success: true, event }
+  },
+})
+
 export const deleteEvent = mutation({
   args: {
     eventId: v.id('events'),
