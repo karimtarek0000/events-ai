@@ -40,7 +40,7 @@ const RegisterForm = ({ eventId }: { eventId: Id<'events'> }) => {
       try {
         await registerEvent({ eventId, ...data })
         push('/events')
-        toast.success('Registration done see you soooon')
+        toast.success('Registration done, See you there!')
       } catch (err) {
         const errorMessage = errorMessageHandle(err)
         toast.error(errorMessage)
