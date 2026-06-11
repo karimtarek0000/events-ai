@@ -24,5 +24,9 @@ export default async function Page({ params }: PageProps) {
   const { id } = await params
   const event = await preloadQuery(api.events.getEvent, { eventId: id })
 
-  return <EventDetails preloadedEvents={event} />
+  return (
+    <section className="lg:w-[40vw] mx-auto flex flex-col gap-y-5">
+      <EventDetails preloadedEvents={event} />
+    </section>
+  )
 }
