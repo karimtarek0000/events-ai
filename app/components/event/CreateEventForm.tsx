@@ -10,11 +10,11 @@ import { ConvexError } from 'convex/values'
 import { useRouter } from 'next/navigation'
 import { useState, useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
-import { BasicInfoSection } from './sections/BasicInfoSection'
-import { CapacitySection } from './sections/CapacitySection'
-import { CustomizationSection } from './sections/CustomizationSection'
-import { DateTimeSection } from './sections/DateTimeSection'
-import { LocationSection } from './sections/LocationSection'
+import { BasicInfoSection } from './form-sections/BasicInfoSection'
+import { CapacitySection } from './form-sections/CapacitySection'
+import { CustomizationSection } from './form-sections/CustomizationSection'
+import { DateTimeSection } from './form-sections/DateTimeSection'
+import { LocationSection } from './form-sections/LocationSection'
 
 export default function CreateEventForm() {
   const router = useRouter()
