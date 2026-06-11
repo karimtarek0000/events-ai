@@ -18,6 +18,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: event.title,
     description: event.description,
+    openGraph: {
+      title: event.title,
+      description: event.description,
+      images: event.coverImage
+        ? [
+            {
+              url: event.coverImage,
+              width: 1200,
+              height: 630,
+              alt: event.title,
+            },
+          ]
+        : [],
+    },
   }
 }
 

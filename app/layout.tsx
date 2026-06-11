@@ -38,6 +38,10 @@ export const metadata: Metadata = {
     'event discovery',
     'AI-powered',
   ],
+  openGraph: {
+    title: 'EventRAI',
+    description: 'Event discovery, AI-powered recommendations, and seamless event management.',
+  },
 }
 
 export default function RootLayout({
