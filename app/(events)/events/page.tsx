@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 export default async function Page() {
   return (
     <>
-      <h1 className="text-3xl text-center my-10">Explore all new events</h1>
+      <h1 className="text-3xl text-center mb-10">Explore all new events</h1>
 
       <ErrorBoundry>
         <Suspense fallback={<CarousalEventsSkeleton />}>
