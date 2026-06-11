@@ -7,10 +7,10 @@ import { errorMessageHandle } from '@/utils'
 import { EventFormValues, eventSchema, FormInput, FormOutput } from '@/validations/events.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from 'convex/react'
-import { ConvexError } from 'convex/values'
 import { useRouter } from 'next/navigation'
-import { useState, useTransition } from 'react'
+import { useTransition } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { BasicInfoSection } from './form-sections/BasicInfoSection'
 import { CapacitySection } from './form-sections/CapacitySection'
 import { CustomizationSection } from './form-sections/CustomizationSection'
@@ -19,7 +19,6 @@ import { LocationSection } from './form-sections/LocationSection'
 
 export default function CreateEventForm() {
   const router = useRouter()
-  const [error, setError] = useState<string | null>(null)
   const createEvent = useMutation(api.events.create)
   const [isPending, startTransition] = useTransition()
 
@@ -32,7 +31,6 @@ export default function CreateEventForm() {
 
   const onSubmit = async (data: EventFormValues) => {
     startTransition(async () => {
-      setError(null)
       try {
         await createEvent({
           ...data,
@@ -47,9 +45,10 @@ export default function CreateEventForm() {
         })
 
         router.push('/')
+        toast.success('Create a new event successfuly')
       } catch (err) {
         const errorMessage = errorMessageHandle(err)
-        setError(errorMessage)
+        toast.error(errorMessage)
       }
     })
   }
@@ -64,12 +63,6 @@ export default function CreateEventForm() {
         <CardContent>
           <FormProvider {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {error && (
-                <div className="bg-destructive/10 text-center text-destructive px-4 py-3 rounded-md">
-                  {error}
-                </div>
-              )}
-
               <BasicInfoSection />
               <hr />
               <DateTimeSection />
