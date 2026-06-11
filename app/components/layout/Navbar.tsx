@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button'
 import { Show, SignInButton, SignUpButton } from '@clerk/nextjs'
 import { auth } from '@clerk/nextjs/server'
-import { Search } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import SearchBar from '../SearchInput'
@@ -30,7 +29,7 @@ export default async function Header() {
             Pricing
           </Link>
           <Link href="/events" className="hidden sm:block hover:text-white">
-            Explore
+            Events
           </Link>
           <div className="min-w-20.75">
             {userId && (
