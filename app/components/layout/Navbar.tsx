@@ -17,7 +17,7 @@ export default async function Header() {
       <div className="mx-auto max-w-7xl px-4 h-16 flex items-center justify-between gap-4">
         {/* Logo */}
         <Link href="/">
-          <Image loading="eager" alt="image" width={90} height={90} src="/logo.png" />
+          <Image loading="eager" alt="image" width={90} height={90} src="/logo.png" sizes="100px" />
         </Link>
 
         {/* Search + Filters (desktop only) */}

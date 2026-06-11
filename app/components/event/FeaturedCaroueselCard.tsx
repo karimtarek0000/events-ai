@@ -32,6 +32,7 @@ function FeaturedCaroueselCard({ events }: { events: Event[] }) {
                     fill
                     className="object-cover"
                     loading={i == 0 ? 'eager' : 'lazy'}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
 
                   {/* Overlay */}
