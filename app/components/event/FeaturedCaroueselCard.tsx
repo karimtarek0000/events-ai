@@ -8,8 +8,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
+import { Event } from '@/types/event.type'
 import Image from 'next/image'
-import { Event } from './EventCard'
 
 function FeaturedCaroueselCard({ events }: { events: Event[] }) {
   return (
