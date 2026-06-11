@@ -3,7 +3,7 @@ import CTAButton from './CTAButton'
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden h-screen flex items-center">
+    <section className="relative overflow-hidden h-[80vh] flex items-center">
       {/* Background gradients */}
       <div className="mx-auto max-w-7xl px-6 py-28 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* LEFT CONTENT */}
@@ -11,7 +11,7 @@ export default function Hero() {
           <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
             Create and launch your
             <span className="px-2 bg-linear-to-r from-blue-400 to-pink-500 bg-clip-text text-transparent">
-              Event in minutes
+              Event in seconds
             </span>
           </h1>
 
