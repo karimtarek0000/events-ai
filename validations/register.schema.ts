@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 export const registerSchema = z.object({
-  attendeeName: z.string({ error: 'Title is required' }).min(1, 'Name cannot be empty'),
+  attendeeName: z.string({ error: 'Name is required' }).min(1, 'Name is required'),
   attendeeEmail: z.email({ error: 'Email is not valid' }),
   registerCount: z
     .number({ error: 'Capacity is required' })
