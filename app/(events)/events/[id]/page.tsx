@@ -1,4 +1,5 @@
 import EventDetails from '@/app/components/event/EventDetails'
+import RegisterForm from '@/app/components/event/RegisterForm'
 import { api } from '@/convex/_generated/api'
 import { Id } from '@/convex/_generated/dataModel'
 import { fetchQuery, preloadQuery } from 'convex/nextjs'
@@ -27,6 +28,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <section className="lg:w-[40vw] mx-auto flex flex-col gap-y-5">
       <EventDetails preloadedEvents={event} />
+      <RegisterForm eventId={id} preloadedEvents={event} />
     </section>
   )
 }
