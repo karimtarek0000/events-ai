@@ -11,7 +11,7 @@ interface EventsListProps {
 const EventsDetails = ({ preloadedEvents }: EventsListProps) => {
   const event = usePreloadedQuery(preloadedEvents)
 
-  return <EventCard event={event} />
+  return <EventCard event={event} pointerEvent />
 }
 
 export default EventsDetails
