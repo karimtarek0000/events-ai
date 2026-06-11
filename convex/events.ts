@@ -3,6 +3,21 @@ import { PLANS, Plans } from '../config'
 import { mutation, query } from './_generated/server'
 
 // Query
+export const getEvent = query({
+  args: {
+    eventId: v.id('events'),
+  },
+  handler: async (ctx, args) => {
+    const event = await ctx.db.get(args.eventId)
+
+    if (!event) {
+      throw new ConvexError('Event with this id not found')
+    }
+
+    return event
+  },
+})
+
 export const getFeaturedEvents = query({
   args: {
     limit: v.optional(v.number()),
@@ -155,21 +170,7 @@ export const getEventByLocation = query({
   },
 })
 
-export const getEvent = mutation({
-  args: {
-    eventId: v.id('events'),
-  },
-  handler: async (ctx, args) => {
-    const event = await ctx.db.get(args.eventId)
-
-    if (!event) {
-      throw new ConvexError('Event with this id not found')
-    }
-
-    return { success: true, event }
-  },
-})
-
+// Mutations
 export const deleteEvent = mutation({
   args: {
     eventId: v.id('events'),
@@ -206,7 +207,6 @@ export const deleteEvent = mutation({
   },
 })
 
-// Mutations
 export const create = mutation({
   args: {
     title: v.string(),
