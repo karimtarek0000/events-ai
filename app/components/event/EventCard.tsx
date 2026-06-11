@@ -14,9 +14,11 @@ export type Event = {
   capacity?: number
 }
 
-const EventCard = ({ event }: { event: Event }) => {
+const EventCard = ({ event, pointerEvent = false }: { event: Event; pointerEvent?: boolean }) => {
   return (
-    <Card className="hover:shadow-lg p-0 transition flex flex-col h-full">
+    <Card
+      className={`${pointerEvent && 'pointer-events-none'} hover:shadow-lg p-0 transition flex flex-col h-full`}
+    >
       <Link
         href={`/events/${event._id}`}
         className="block relative h-44 w-full bg-muted overflow-hidden rounded-t-xl"
