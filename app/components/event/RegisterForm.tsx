@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { api } from '@/convex/_generated/api'
 import { Id } from '@/convex/_generated/dataModel'
+import { errorMessageHandle } from '@/utils'
 import {
   RegisterFormValues,
   RegisterInput,
@@ -13,10 +14,10 @@ import {
 } from '@/validations/register.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Preloaded, useMutation, usePreloadedQuery } from 'convex/react'
-import { ConvexError } from 'convex/values'
-import { redirect } from 'next/navigation'
-import { useState, useTransition } from 'react'
+import { useRouter } from 'next/navigation'
+import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 interface RegisterFormProps {
   eventId: Id<'events'>
@@ -28,7 +29,7 @@ const RegisterForm = ({ eventId, preloadedEvents }: RegisterFormProps) => {
   const remainCountForRegister = capacity - registrationCount
 
   const [isPending, startTransition] = useTransition()
-  const [error, setError] = useState<string | null>(null)
+  const { push } = useRouter()
 
   const registerEvent = useMutation(api.register.registerForEvent)
 
@@ -43,21 +44,14 @@ const RegisterForm = ({ eventId, preloadedEvents }: RegisterFormProps) => {
   })
 
   const onSubmit = async (data: RegisterFormValues) => {
-    setError(null)
-
     startTransition(async () => {
       try {
         await registerEvent({ eventId, ...data })
-        redirect('/')
+        push('/')
+        toast.success('Register an event done see you soooon.')
       } catch (err) {
-        const errorMessage =
-          err instanceof ConvexError
-            ? (err.data as string)
-            : err instanceof Error
-              ? err.message
-              : 'Failed to create event'
-
-        setError(errorMessage)
+        const errorMessage = errorMessageHandle(err)
+        toast.error(errorMessage)
       }
     })
   }
@@ -65,12 +59,6 @@ const RegisterForm = ({ eventId, preloadedEvents }: RegisterFormProps) => {
   return (
     <>
       <h2 className="text-2xl my-5 text-center">Register in this event</h2>
-
-      {error && (
-        <div className="bg-destructive/10 text-center text-destructive px-4 py-3 rounded-md">
-          {error}
-        </div>
-      )}
 
       <form
         onSubmit={handleSubmit(onSubmit)}
