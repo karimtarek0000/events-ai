@@ -1,23 +1,25 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { api } from '@/convex/_generated/api'
-import { Id } from '@/convex/_generated/dataModel'
-import { errorMessageHandle } from '@/utils'
 import {
+  api,
+  Button,
+  errorMessageHandle,
+  Id,
+  Input,
+  Label,
+  Preloaded,
   RegisterFormValues,
   RegisterInput,
   RegisterOutput,
   registerSchema,
-} from '@/validations/register.schema'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Preloaded, useMutation, usePreloadedQuery } from 'convex/react'
-import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
+  toast,
+  useForm,
+  useMutation,
+  usePreloadedQuery,
+  useRouter,
+  useTransition,
+  zodResolver,
+} from './'
 
 interface RegisterFormProps {
   eventId: Id<'events'>

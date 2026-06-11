@@ -1,21 +1,31 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { api } from '@/convex/_generated/api'
-import { errorMessageHandle } from '@/utils'
-import { EventFormValues, eventSchema, FormInput, FormOutput } from '@/validations/events.schema'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from 'convex/react'
-import { useRouter } from 'next/navigation'
-import { useTransition } from 'react'
-import { FormProvider, useForm } from 'react-hook-form'
-import { toast } from 'sonner'
-import { BasicInfoSection } from './form-sections/BasicInfoSection'
-import { CapacitySection } from './form-sections/CapacitySection'
-import { CustomizationSection } from './form-sections/CustomizationSection'
-import { DateTimeSection } from './form-sections/DateTimeSection'
-import { LocationSection } from './form-sections/LocationSection'
+import {
+  api,
+  BasicInfoSection,
+  Button,
+  CapacitySection,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  CustomizationSection,
+  DateTimeSection,
+  errorMessageHandle,
+  EventFormValues,
+  eventSchema,
+  FormInput,
+  FormOutput,
+  FormProvider,
+  LocationSection,
+  toast,
+  useForm,
+  useMutation,
+  useRouter,
+  useTransition,
+  zodResolver,
+} from './'
 
 export default function CreateEventForm() {
   const router = useRouter()
