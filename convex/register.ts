@@ -11,29 +11,34 @@ export const sendConfirmationEmail = action({
     endDate: v.number(),
   },
   handler: async (ctx, args) => {
-    const res = await fetch('https://api.resend.com/emails', {
+    const res = await fetch('https://api.mailersend.com/v1/email', {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+        Authorization: `Bearer ${process.env.MAILERSEND_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'noreply@yourdomain.com',
-        to: args.attendeeEmail,
+        from: { email: 'noreply@test-r6ke4n1orz9gon12.mlsender.net' },
+        to: [{ email: args.attendeeEmail }],
         subject: `You're registered for ${args.eventName}!`,
-        html: `
-          <h2>Hi ${args.attendeeName}!</h2>
-          <p>You're confirmed for <strong>${args.eventName}</strong>.</p>
-          <p>Start Date: ${args.startDate}</p>
-          <p>End Date: ${args.endDate}</p>
-          <p>See you there soon!</p>
-        `,
+        template_id: 'o65qngk1xejlwr12',
+        personalization: [
+          {
+            email: args.attendeeEmail,
+            data: {
+              attendeeName: args.attendeeName,
+              eventName: args.eventName,
+              startDate: new Date(args.startDate).toLocaleDateString(),
+              endDate: new Date(args.endDate).toLocaleDateString(),
+            },
+          },
+        ],
       }),
     })
 
     if (!res.ok) {
-      const error = await res.json()
-      throw new Error(`Resend error: ${JSON.stringify(error)}`)
+      const data = await res.json() // ← only parse JSON on error
+      throw new Error(`MailerSend error: ${JSON.stringify(data)}`)
     }
   },
 })
@@ -78,12 +83,12 @@ export const registerForEvent = mutation({
     })
 
     // 5. Schedule confirmation email
-    // await ctx.scheduler.runAfter(0, api.register.sendConfirmationEmail, {
-    //   attendeeName: args.attendeeName,
-    //   attendeeEmail: args.attendeeEmail,
-    //   eventName: event.title,
-    //   startDate: event.startDate,
-    //   endDate: event.endDate,
-    // })
+    await ctx.scheduler.runAfter(0, api.register.sendConfirmationEmail, {
+      attendeeName: args.attendeeName,
+      attendeeEmail: args.attendeeEmail,
+      eventName: event.title,
+      startDate: event.startDate,
+      endDate: event.endDate,
+    })
   },
 })
