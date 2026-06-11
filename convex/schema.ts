@@ -76,7 +76,7 @@ export default defineSchema({
     eventId: v.id('events'),
     attendeeName: v.string(),
     attendeeEmail: v.string(),
-    capacity: v.number(),
+    registerCount: v.number(),
   })
     .index('by_event', ['eventId'])
     .index('by_event_and_email', ['eventId', 'attendeeEmail']),

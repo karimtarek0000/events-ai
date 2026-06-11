@@ -43,7 +43,7 @@ export const registerForEvent = mutation({
     eventId: v.id('events'),
     attendeeName: v.string(),
     attendeeEmail: v.string(),
-    capacity: v.number(),
+    registerCount: v.number(),
   },
   handler: async (ctx, args) => {
     // 1. Check duplicate
@@ -56,7 +56,7 @@ export const registerForEvent = mutation({
 
     if (existing) throw new ConvexError('This email is already registered for this event.')
 
-    // 2. Get event details for the email
+    // 2. Get event
     const event = await ctx.db.get(args.eventId)
     if (!event) throw new ConvexError('Event not found.')
 
@@ -65,16 +65,25 @@ export const registerForEvent = mutation({
       eventId: args.eventId,
       attendeeName: args.attendeeName,
       attendeeEmail: args.attendeeEmail,
-      capacity: args.capacity,
+      registerCount: args.registerCount,
     })
 
-    // 4. Schedule confirmation email
-    await ctx.scheduler.runAfter(0, api.register.sendConfirmationEmail, {
-      attendeeName: args.attendeeName,
-      attendeeEmail: args.attendeeEmail,
-      eventName: event.title,
-      startDate: event.startDate,
-      endDate: event.endDate,
+    if (args.registerCount > event.capacity - event.registrationCount) {
+      throw new ConvexError('Registration count is grather than remaning of capacity')
+    }
+
+    // 4. Increment registrationCount on the event
+    await ctx.db.patch(args.eventId, {
+      registrationCount: (event.registrationCount ?? 0) + args.registerCount,
     })
+
+    // 5. Schedule confirmation email
+    // await ctx.scheduler.runAfter(0, api.register.sendConfirmationEmail, {
+    //   attendeeName: args.attendeeName,
+    //   attendeeEmail: args.attendeeEmail,
+    //   eventName: event.title,
+    //   startDate: event.startDate,
+    //   endDate: event.endDate,
+    // })
   },
 })
