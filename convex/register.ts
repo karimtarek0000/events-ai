@@ -18,7 +18,7 @@ export const sendConfirmationEmail = action({
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: { email: 'noreply@test-r6ke4n1orz9gon12.mlsender.net' },
+        from: { email: process.env.MAILERSEND_EMAIL_FROM },
         to: [{ email: args.attendeeEmail }],
         subject: `You're registered for ${args.eventName}!`,
         template_id: 'o65qngk1xejlwr12',
