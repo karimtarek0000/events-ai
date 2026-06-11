@@ -23,7 +23,7 @@ const EventCard = ({ event }: { event: Event }) => {
       >
         <Image
           src={event.coverImage || '/placeholder-event.jpg'}
-          alt={event.title}
+          alt={event.title || ''}
           loading="eager"
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
