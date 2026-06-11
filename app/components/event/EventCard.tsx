@@ -1,20 +1,9 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { Id } from '@/convex/_generated/dataModel'
+import { EventCardProps } from '@/types/event.type'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export type Event = {
-  _id: Id<'events'>
-  title: string
-  city: string
-  country: string
-  startDate: number
-  registrationCount: number
-  coverImage?: string
-  capacity?: number
-}
-
-const EventCard = ({ event, pointerEvent = false }: { event: Event; pointerEvent?: boolean }) => {
+const EventCard = ({ event, showDescription = false, pointerEvent = false }: EventCardProps) => {
   return (
     <Card
       className={`${pointerEvent && 'pointer-events-none'} hover:shadow-lg p-0 transition flex flex-col h-full`}
@@ -40,6 +29,7 @@ const EventCard = ({ event, pointerEvent = false }: { event: Event; pointerEvent
       </CardHeader>
 
       <CardContent className="space-y-2 text-sm text-muted-foreground flex-1">
+        {showDescription && <p className="mb-5">{event.description}</p>}
         <p>
           📍 {event.city}, {event.country}
         </p>
@@ -51,9 +41,7 @@ const EventCard = ({ event, pointerEvent = false }: { event: Event; pointerEvent
         </p>
       </CardContent>
 
-      <CardFooter className="pt-0 mt-auto">
-        {/* <BookingForm eventId={event._id} eventTitle={event.title} /> */}
-      </CardFooter>
+      <CardFooter className="pt-0 mt-auto"></CardFooter>
     </Card>
   )
 }

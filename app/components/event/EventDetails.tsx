@@ -1,17 +1,13 @@
 'use client'
 
-import { api } from '@/convex/_generated/api'
-import { Preloaded, usePreloadedQuery } from 'convex/react'
+import { EventsListProps } from '@/types/event.type'
+import { usePreloadedQuery } from 'convex/react'
 import EventCard from '../event/EventCard'
-
-interface EventsListProps {
-  preloadedEvents: Preloaded<typeof api.events.getEvent>
-}
 
 const EventsDetails = ({ preloadedEvents }: EventsListProps) => {
   const event = usePreloadedQuery(preloadedEvents)
 
-  return <EventCard event={event} pointerEvent />
+  return <EventCard event={event} pointerEvent showDescription />
 }
 
 export default EventsDetails
