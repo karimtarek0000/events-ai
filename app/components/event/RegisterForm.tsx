@@ -7,7 +7,6 @@ import {
   Id,
   Input,
   Label,
-  Preloaded,
   RegisterFormValues,
   RegisterInput,
   RegisterOutput,
@@ -15,7 +14,6 @@ import {
   toast,
   useForm,
   useMutation,
-  usePreloadedQuery,
   useRouter,
   useTransition,
   zodResolver,
@@ -23,13 +21,9 @@ import {
 
 interface RegisterFormProps {
   eventId: Id<'events'>
-  preloadedEvents: Preloaded<typeof api.events.getEvent>
 }
 
-const RegisterForm = ({ eventId, preloadedEvents }: RegisterFormProps) => {
-  const { capacity, registrationCount } = usePreloadedQuery(preloadedEvents)
-  const remainCountForRegister = capacity - registrationCount
-
+const RegisterForm = ({ eventId }: RegisterFormProps) => {
   const [isPending, startTransition] = useTransition()
   const { push } = useRouter()
 
@@ -49,7 +43,7 @@ const RegisterForm = ({ eventId, preloadedEvents }: RegisterFormProps) => {
     startTransition(async () => {
       try {
         await registerEvent({ eventId, ...data })
-        push('/')
+        push('/events')
         toast.success('Registration done see you soooon')
       } catch (err) {
         const errorMessage = errorMessageHandle(err)
@@ -83,7 +77,6 @@ const RegisterForm = ({ eventId, preloadedEvents }: RegisterFormProps) => {
           id="registerCount"
           type="number"
           placeholder="Count of register"
-          max={remainCountForRegister}
           {...register('registerCount', { valueAsNumber: true })}
         />
         {errors.registerCount && (
