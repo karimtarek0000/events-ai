@@ -1,13 +1,14 @@
-import { Suspense } from 'react'
-
-import { Metadata } from 'next'
-import ErrorBoundry from '../../components/error/ErrorBoundry'
-import FeaturedCarouesel from '../../components/features/FeaturedCarouesel'
-import FeaturedEvents from '../../components/features/FeaturedEvents'
-import NearbyEvents from '../../components/features/NearbyEvents'
-import PopularEvents from '../../components/features/PopularEvents'
-import CarousalEventsSkeleton from '../../components/skeleton/CarousalEventsSkeleton'
-import EventsSkeleton from '../../components/skeleton/EventsSkeleton'
+import {
+  CarousalEventsSkeleton,
+  ErrorBoundry,
+  EventsSkeleton,
+  FeaturedCarouesel,
+  FeaturedEvents,
+  Metadata,
+  NearbyEvents,
+  PopularEvents,
+  Suspense,
+} from './'
 
 export const metadata: Metadata = {
   title: 'Explore Events',
