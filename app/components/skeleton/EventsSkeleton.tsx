@@ -1,4 +1,4 @@
-function EventCardSkeleton() {
+export const EventCardSkeleton = () => {
   return (
     <div className="bg-[#1c1c1e] rounded-2xl overflow-hidden">
       {/* Image */}
