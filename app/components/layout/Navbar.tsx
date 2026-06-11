@@ -29,7 +29,7 @@ export default async function Header() {
           <Link href="/pricing" className="hidden sm:block hover:text-white">
             Pricing
           </Link>
-          <Link href="/explore" className="hidden sm:block hover:text-white">
+          <Link href="/events" className="hidden sm:block hover:text-white">
             Explore
           </Link>
           <div className="min-w-20.75">
