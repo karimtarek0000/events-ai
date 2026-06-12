@@ -8,7 +8,7 @@ const SearchInput = () => {
   const { search, setSearch, searchHandler, clearBTN } = useSearch('/search-events')
 
   return (
-    <div className="hidden md:flex flex-1 max-w-xl items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 h-10">
+    <div className="flex flex-1 mx-2 max-w-xl max-[578px]:order-3 items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 h-10">
       <Search className="w-4 h-4 text-white/60" />
 
       <input
