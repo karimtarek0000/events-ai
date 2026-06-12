@@ -7,7 +7,7 @@ import EventCard from '../event/EventCard'
 const EventsDetails = ({ preloadedEvents }: EventsListProps) => {
   const event = usePreloadedQuery(preloadedEvents)
 
-  return <EventCard event={event} pointerEvent showDescription />
+  return <EventCard event={event} pointerEvent isShow />
 }
 
 export default EventsDetails
