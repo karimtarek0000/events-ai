@@ -20,7 +20,7 @@ function FeaturedCaroueselCard({ events }: { events: Event[] }) {
         }}
         className="w-full"
       >
-        <CarouselContent className="-ml-2 md:-ml-4">
+        <CarouselContent>
           {events.map((event, i) => (
             <CarouselItem key={event._id} className="basis-full">
               <Card className="overflow-hidden p-0">
