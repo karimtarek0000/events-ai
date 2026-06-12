@@ -251,26 +251,25 @@ export const create = mutation({
     }
 
     /* ---------- PLAN CHECK ---------- */
-
     const plan = PLANS[user.plan as Plans] ?? 'free'
 
-    if (plan && user.freeEventsCreated > 1) {
+    if (plan === 'free' && user.eventsCreatedCount > 1) {
       throw new ConvexError('Free plan allows only 1 event')
     }
 
-    if (plan === 'starter' && user.freeEventsCreated > 3) {
+    if (plan === 'starter' && user.eventsCreatedCount > 3) {
       throw new ConvexError('Starter plan allows only 3 event')
     }
 
-    if (plan === 'pro' && user.freeEventsCreated > 10) {
+    if (plan === 'pro' && user.eventsCreatedCount > 10) {
       throw new ConvexError('Pro plan allows only 10 event')
     }
 
-    if ((plan === 'starter' || plan) && args.ticketType === 'paid') {
+    if ((plan === 'starter' || plan === 'free') && args.ticketType === 'paid') {
       throw new ConvexError('Paid events require at least Pro plan')
     }
 
-    if (plan === 'max' && args.themeColor) {
+    if (plan !== 'max' && args.themeColor) {
       throw new ConvexError('Custom theme color requires Max plan')
     }
 
@@ -324,7 +323,7 @@ export const create = mutation({
     /* ---------- UPDATE COUNTER ---------- */
     if (plan !== 'max') {
       await ctx.db.patch(user._id, {
-        freeEventsCreated: user.freeEventsCreated + 1,
+        eventsCreatedCount: user.eventsCreatedCount + 1,
       })
     }
 

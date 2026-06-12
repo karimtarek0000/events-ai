@@ -1,5 +1,5 @@
 import { ConvexError, v } from 'convex/values'
-import { internalMutation, mutation, query } from './_generated/server'
+import { mutation, query } from './_generated/server'
 
 export const store = mutation({
   args: {},
@@ -30,11 +30,12 @@ export const store = mutation({
     return await ctx.db.insert('users', {
       clerkId: identity.subject,
       name: identity.name ?? 'Anonymous',
+      plan: 'free',
       tokenIdentifier: identity.tokenIdentifier,
       imageUrl: identity.pictureUrl ?? '',
       email: identity.email ?? '',
       hasCompletedOnboarding: false,
-      freeEventsCreated: 1,
+      eventsCreatedCount: 0,
     })
   },
 })
@@ -53,7 +54,7 @@ export const changeUserPlan = mutation({
     if (!user) throw new ConvexError('User not found')
 
     if (user.plan !== args.plan) {
-      await ctx.db.patch(user._id, { plan: args.plan })
+      await ctx.db.patch(user._id, { plan: args.plan, eventsCreatedCount: 0 })
     }
   },
 })
@@ -69,5 +70,22 @@ export const getCurrentUser = query({
       .query('users')
       .withIndex('token', q => q.eq('tokenIdentifier', identity.tokenIdentifier))
       .unique()
+  },
+})
+
+export const getEventsCreatedCount = query({
+  args: {},
+  handler: async ctx => {
+    const identity = await ctx.auth.getUserIdentity()
+    if (!identity) return 0
+
+    const user = await ctx.db
+      .query('users')
+      .withIndex('token', q => q.eq('tokenIdentifier', identity.tokenIdentifier))
+      .unique()
+
+    if (!user) return 0
+
+    return user.eventsCreatedCount
   },
 })

@@ -123,9 +123,9 @@ export const seedEvents = internalMutation({
           state: 'Istanbul',
           country: 'Turkey',
         },
-        plan: "free",
+        plan: 'free',
         interests: ['tech', 'business', 'health'],
-        freeEventsCreated: 0,
+        eventsCreatedCount: 0,
       })
 
       organizer = await ctx.db.get(organizerId)
