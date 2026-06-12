@@ -1,7 +1,7 @@
 import { Plans } from '@/config'
 import { getUserPlan } from '@/utils/index.server'
-import CreateEventForm from '../components/event/CreateEventForm'
-import ExceedLimit from '../components/ExceedLimit'
+import CreateEventForm from '../../components/event/CreateEventForm'
+import ExceedLimit from '../../components/ExceedLimit'
 
 export default async function Page() {
   const plan = await getUserPlan()
