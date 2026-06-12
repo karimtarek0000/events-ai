@@ -15,10 +15,36 @@ export async function POST(req: NextRequest) {
 
   if (evt.type === 'subscription.updated') {
     const data = evt.data as any
-
     const clerkId = data?.payer?.user_id
-    const rawName = data?.items?.[data.items.length - 1]?.plan?.slug ?? ''
-    const plan = rawName.replace(/[-\s]*plan$/i, '') as Plans
+
+    const PLAN_ORDER: Record<string, number> = {
+      free_user: 0,
+      free: 0,
+      starter: 1,
+      pro: 2,
+      max: 3,
+    }
+
+    const items = data?.items ?? []
+
+    // الـ upcoming هو الـ plan الجديد عند الـ upgrade
+    const upcomingItem = items
+      .filter((item: any) => item?.status === 'upcoming')
+      .sort(
+        (a: any, b: any) => (PLAN_ORDER[b?.plan?.slug] ?? 0) - (PLAN_ORDER[a?.plan?.slug] ?? 0),
+      )[0]
+
+    // fallback للـ active لو مفيش upcoming
+    const activeItem = items
+      .filter((item: any) => item?.status === 'active')
+      .sort(
+        (a: any, b: any) => (PLAN_ORDER[b?.plan?.slug] ?? 0) - (PLAN_ORDER[a?.plan?.slug] ?? 0),
+      )[0]
+
+    const selectedItem = upcomingItem ?? activeItem
+
+    const rawSlug = selectedItem?.plan?.slug ?? 'free_user'
+    const plan = (rawSlug === 'free_user' ? 'free' : rawSlug) as Plans
 
     try {
       await fetchMutation(api.users.changeUserPlan, { clerkId, plan })
