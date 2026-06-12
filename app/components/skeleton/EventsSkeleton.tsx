@@ -33,7 +33,7 @@ export const EventCardSkeleton = () => {
 
 export default function EventsSkeleton({ showHeader = true }: { showHeader?: boolean }) {
   return (
-    <div className="min-h-screen p-6">
+    <div className="min-h-screen p-6 w-full">
       {/* Header */}
       {showHeader && (
         <div className="flex items-center gap-3 mb-6">
