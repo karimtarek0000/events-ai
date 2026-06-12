@@ -24,7 +24,7 @@ export default async function Header() {
         <SearchBar />
 
         {/* Right links */}
-        <div className="flex justify-betwee max-md:order-2 items-center gap-4 text-sm text-white/80">
+        <div className="flex lg:min-w-61.75 justify-betwee max-md:order-2 items-center gap-4 text-sm text-white/80">
           <Link href="/pricing" className="hover:text-white">
             Pricing
           </Link>
