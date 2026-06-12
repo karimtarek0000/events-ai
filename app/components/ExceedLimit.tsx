@@ -1,23 +1,16 @@
 'use client'
+
+import { PLAN_LIMITS, Plans } from '@/config'
 import { useQuery } from 'convex/react'
 import { PropsWithChildren } from 'react'
 import { api } from '../../convex/_generated/api'
-
-export type Plans = 'free' | 'starter' | 'pro' | 'max'
-
-const PLAN_LIMITS: Record<Plans, number> = {
-  free: 1,
-  starter: 3,
-  pro: 10,
-  max: Infinity,
-}
 
 interface ExceedLimitProps extends PropsWithChildren {
   plan: Plans
 }
 
 const ExceedLimit = ({ plan, children }: ExceedLimitProps) => {
-  const eventsCount = useQuery(api.events.getMyEventsCount)
+  const eventsCount = useQuery(api.users.getEventsCreatedCount)
 
   if (eventsCount === undefined) {
     return <div></div>
