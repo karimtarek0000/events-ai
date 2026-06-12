@@ -1,5 +1,7 @@
 'use client'
 
+import { Badge } from '@/components/ui/badge'
+import { Plans } from '@/config'
 import {
   api,
   BasicInfoSection,
@@ -27,7 +29,7 @@ import {
   zodResolver,
 } from './'
 
-export default function CreateEventForm() {
+export default function CreateEventForm({ plan }: { plan: string }) {
   const router = useRouter()
   const createEvent = useMutation(api.events.create)
   const [isPending, startTransition] = useTransition()
@@ -67,7 +69,10 @@ export default function CreateEventForm() {
     <div className="max-w-4xl mx-auto px-4 py-5">
       <Card>
         <CardHeader>
-          <CardTitle>Create New Event</CardTitle>
+          <CardTitle className="flex justify-between">
+            <span>Create New Event</span>
+            <Badge className="capitalize font-bold text-[1rem] p-2">{plan}</Badge>
+          </CardTitle>
           <CardDescription>Fill in the details below to create your event</CardDescription>
         </CardHeader>
         <CardContent>

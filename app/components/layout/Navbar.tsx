@@ -14,7 +14,7 @@ export default async function Header() {
     <nav className="border-b p-3 mb-5 sticky overflow-hidden z-50 inset-0 border-white/10 bg-black/80 backdrop-blur-md">
       <LoadingBarAuth />
 
-      <div className="container mx-auto mx-auto flex flex-wrap items-center justify-between">
+      <div className="container mx-auto mx-auto max-md:*:basis-2/12 flex flex-wrap items-center justify-between">
         {/* Logo */}
         <Link href="/" className=" shrink-0">
           <Image loading="eager" alt="image" width={90} height={90} src="/logo.png" sizes="100px" />
@@ -24,20 +24,20 @@ export default async function Header() {
         <SearchBar />
 
         {/* Right links */}
-        <div className="flex min-w-61.75 max-[578px]:order-2 items-center gap-4 text-sm text-white/80">
+        <div className="flex justify-betwee max-md:order-2 items-center gap-4 text-sm text-white/80">
           <Link href="/pricing" className="hover:text-white">
             Pricing
           </Link>
           <Link href="/events" className="hover:text-white">
             Events
           </Link>
-          <div className="min-w-20.75">
-            {userId && (
+          {userId && (
+            <div className="min-w-20.75">
               <Link href="/create-event" className="hover:text-white">
                 Create Event
               </Link>
-            )}
-          </div>
+            </div>
+          )}
           <Show when="signed-out">
             <SignInButton>
               <Button

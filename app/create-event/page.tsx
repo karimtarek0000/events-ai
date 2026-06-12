@@ -8,7 +8,7 @@ export default async function Page() {
 
   return (
     <ExceedLimit plan={plan.name as Plans}>
-      <CreateEventForm />
+      <CreateEventForm plan={plan.name!} />
     </ExceedLimit>
   )
 }
