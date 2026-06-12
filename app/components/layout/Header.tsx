@@ -3,9 +3,9 @@ import CTAButton from './CTAButton'
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden h-[80vh] flex items-center">
+    <section className="relative overflow-hidden md:h-[80vh] flex items-center">
       {/* Background gradients */}
-      <div className="mx-auto max-w-7xl px-6 py-28 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* LEFT CONTENT */}
         <div className="max-lg:text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
@@ -15,7 +15,7 @@ export default function Hero() {
             </span>
           </h1>
 
-          <p className="mt-6 text-white/60">
+          <p className="mt-6 text-white/60 lg:max-w-md">
             Whether you are hosting or attending, every event memorable. Join our community today.
           </p>
 
