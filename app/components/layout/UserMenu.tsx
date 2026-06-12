@@ -1,7 +1,7 @@
 'use client'
 
 import { Show, UserButton } from '@clerk/nextjs'
-import { Calendar, TicketCheck } from 'lucide-react'
+import { Calendar } from 'lucide-react'
 
 const UserMenu = () => {
   return (
@@ -12,11 +12,6 @@ const UserMenu = () => {
             label="My Events"
             labelIcon={<Calendar size="1rem" />}
             href="/my-events"
-          />
-          <UserButton.Link
-            label="My Tickets"
-            labelIcon={<TicketCheck size="1rem" />}
-            href="/my-tickets"
           />
         </UserButton.MenuItems>
       </UserButton>
