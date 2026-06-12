@@ -1,4 +1,4 @@
-import EventsList from '@/app/components/features/EventsList'
+import EventsList from '@/app/components/event/EventsList'
 import { api } from '@/convex/_generated/api'
 import { preloadQuery } from 'convex/nextjs'
 
