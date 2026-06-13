@@ -35,7 +35,9 @@ const ConfirmModal = () => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setToggle(false)}>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={confirmModal.fnForConfirm}>Delete</AlertDialogAction>
+          <AlertDialogAction variant="destructive" onClick={confirmModal.fnForConfirm}>
+            Delete
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
