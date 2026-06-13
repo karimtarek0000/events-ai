@@ -9,34 +9,62 @@ export const eventSchema = z
       .string({ error: 'Description is required' })
       .min(1, 'Description cannot be empty'),
     category: z.string().optional(),
-    tags: z.string().transform(val =>
-      val
-        ?.split(',')
-        .map(t => t.trim())
-        .filter(Boolean),
-    ),
+    tags: z
+      .union([
+        z.string().transform(val =>
+          val
+            .split(',')
+            .map(t => t.trim())
+            .filter(Boolean),
+        ),
+        z.array(z.string()),
+        z.undefined(),
+      ])
+      .optional(),
     startDate: z.coerce.date({ error: 'Start date is required' }),
     endDate: z.coerce.date({ error: 'End date is required' }),
     timezone: z.string().default(() => Intl.DateTimeFormat().resolvedOptions().timeZone),
     locationType: z.enum(['physical', 'online'], {
-      error: "Location type is required — must be 'physical' or 'online'",
+      error: 'Location type is required',
     }),
-    venue: z.string().optional(),
-    address: z.string().optional(),
-    city: z.string({ error: 'City is required' }).min(1, 'City cannot be empty'),
-    state: z.string().optional(),
-    country: z.string({ error: 'Country is required' }).min(1, 'Country cannot be empty'),
+    venue: z
+      .string()
+      .regex(/^[^0-9]*$/, 'Must not contain numbers')
+      .optional(),
+    address: z
+      .string()
+      .regex(/^[^0-9]*$/, 'Must not contain numbers')
+      .optional(),
+    city: z
+      .string({ error: 'City is required' })
+      .min(1, 'City cannot be empty')
+      .regex(/^[^0-9]*$/, 'Must not contain numbers'),
+    state: z
+      .string()
+      .regex(/^[^0-9]*$/, 'Must not contain numbers')
+      .optional(),
+    country: z
+      .string({ error: 'City is required' })
+      .min(1, 'Country cannot be empty')
+      .regex(/^[^0-9]*$/, 'Must not contain numbers'),
     capacity: z
       .number({ error: 'Capacity is required' })
       .int('Capacity must be a whole number')
       .positive('Capacity must be greater than 0'),
     ticketType: z.enum(['free', 'paid']).default('free'),
-    ticketPrice: z.number().positive('Price must be greater than 0').optional(),
+    ticketPrice: z
+      .union([
+        z.coerce
+          .number({ error: 'Price must be a number' })
+          .positive('Price must be greater than 0'),
+        z.undefined(),
+      ])
+      .optional(),
     coverImage: z
       .string({ error: 'Cover image is required' })
       .url('Cover image must be a valid URL'),
     themeColor: z
-      .string()
+      .union([z.string(), z.undefined()])
       .transform(val => (val === '' ? undefined : val))
       .pipe(
         z.string().regex(HEX_COLOR_REGEX, 'Must be a valid hex color (e.g. #3b82f6)').optional(),
@@ -52,7 +80,10 @@ export const eventSchema = z
   )
   .refine(
     data => data.ticketType !== 'paid' || (data.ticketPrice !== undefined && data.ticketPrice > 0),
-    { message: 'Ticket price is required for paid events', path: ['ticketPrice'] },
+    {
+      message: 'Price is required',
+      path: ['ticketPrice'],
+    },
   )
 
 export type FormInput = z.input<typeof eventSchema>
