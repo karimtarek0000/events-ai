@@ -1,4 +1,5 @@
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { EventCardProps, TicketType } from '@/types/event.type'
 import Image from 'next/image'
@@ -21,7 +22,7 @@ const EventCardTags = ({ tags }: { tags: string[] }) => {
   )
 }
 
-const EventCard = ({ event, isShow = false, pointerEvent = false }: EventCardProps) => {
+const EventCard = ({ event, isShow, pointerEvent, isEdit }: EventCardProps) => {
   return (
     <Card
       className={`${pointerEvent && 'pointer-events-none'} hover:shadow-lg p-0 pb-4 transition flex flex-col h-full`}
@@ -49,13 +50,19 @@ const EventCard = ({ event, isShow = false, pointerEvent = false }: EventCardPro
 
       <CardContent className="space-y-2 text-sm text-muted-foreground flex-1">
         {isShow && <p className="mb-5">{event.description}</p>}
-
-        <p>
-          📍 {event.city}, {event.country}
-        </p>
-
+        <div className="flex items-center justify-between">
+          <p>
+            📍 {event.city}, {event.country}
+          </p>
+          {isEdit && (
+            <Button asChild>
+              <Link href={`/create-event`} className="hover:underline">
+                Edit
+              </Link>
+            </Button>
+          )}
+        </div>
         <p>🗓 {new Date(event.startDate).toLocaleDateString()}</p>
-
         <p>
           👥 {event.registrationCount} / {event.capacity || '?'} registered
         </p>
