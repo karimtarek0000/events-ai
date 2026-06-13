@@ -22,6 +22,7 @@ export interface EventCardProps {
   event: Event
   pointerEvent?: boolean
   isShow?: boolean
+  isEdit?: boolean
 }
 
 export interface EventsListProps {
