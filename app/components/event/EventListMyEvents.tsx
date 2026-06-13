@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { api } from '@/convex/_generated/api'
 import { useDeleteEvents } from '@/hooks/deleteEvents'
-import { Preloaded, usePreloadedQuery } from 'convex/react'
+import { Preloaded, useMutation, usePreloadedQuery } from 'convex/react'
 import { Trash } from 'lucide-react'
 import NotFound from '../notFound/NotFound'
 import DeleteEventCheckbox from './DeleteEventCheckbox'
@@ -15,13 +15,15 @@ export interface EventListMyEventProps {
 
 const EventListMyEvent = ({ preloadedEvents }: EventListMyEventProps) => {
   const events = usePreloadedQuery(preloadedEvents)
-  const { ids, selectAll, handleChangeChecked, handleSelectAll } = useDeleteEvents(events)
+  const deleteEvents = useMutation(api.events.deleteEvents)
+  const { ids, selectAll, handleChangeChecked, handleSelectAll, handleDeleteEvents } =
+    useDeleteEvents(events, deleteEvents)
 
   return (
     <>
       {!!events.length && (
         <div className="flex justify-between w-full my-10">
-          <Button onClick={handleSelectAll} variant="destructive" disabled={!ids.length}>
+          <Button onClick={handleDeleteEvents} variant="destructive" disabled={!ids.length}>
             <Trash className=" text-white" />
           </Button>
           <Button onClick={handleSelectAll}>{selectAll ? 'Unselect all' : 'Select all'}</Button>
