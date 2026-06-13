@@ -1,3 +1,4 @@
+export { Badge } from '@/components/ui/badge'
 export { Button } from '@/components/ui/button'
 export { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 export { Input } from '@/components/ui/input'
@@ -25,6 +26,7 @@ export { useRouter } from 'next/navigation'
 export { useTransition } from 'react'
 export { FormProvider, useForm } from 'react-hook-form'
 export { toast } from 'sonner'
+export { useSearchParams } from 'next/navigation'
 
 // form sections
 export { BasicInfoSection } from './form-sections/BasicInfoSection'

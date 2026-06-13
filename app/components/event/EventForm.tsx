@@ -1,9 +1,8 @@
 'use client'
 
-import { Badge } from '@/components/ui/badge'
-import { useSearchParams } from 'next/navigation'
 import {
   api,
+  Badge,
   BasicInfoSection,
   Button,
   CapacitySection,
@@ -25,6 +24,7 @@ import {
   useForm,
   useMutation,
   useRouter,
+  useSearchParams,
   useTransition,
   zodResolver,
 } from '.'
