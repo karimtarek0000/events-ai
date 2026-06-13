@@ -171,9 +171,9 @@ export const getEventByLocation = query({
 })
 
 // Mutations
-export const deleteEvent = mutation({
+export const deleteEvents = mutation({
   args: {
-    eventId: v.id('events'),
+    eventIds: v.array(v.id('events')),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity()
@@ -190,18 +190,16 @@ export const deleteEvent = mutation({
       throw new ConvexError('User not found')
     }
 
-    const event = await ctx.db.get(args.eventId)
-    if (!event) {
-      throw new ConvexError('Event not found')
-    }
+    const results = await Promise.allSettled(args.eventIds.map(id => ctx.db.delete(id)))
 
-    // Verify ownership
-    if (event.organizerId !== user._id) {
-      throw new ConvexError('You are not authorized to delete this event')
-    }
+    const failed = results
+      .map((result, index) => ({ result, id: args.eventIds[index] }))
+      .filter(({ result }) => result.status === 'rejected')
 
-    // Delete the event
-    await ctx.db.delete(args.eventId)
+    if (failed.length > 0) {
+      const failedIds = failed.map(({ id }) => id).join(', ')
+      throw new ConvexError(`Failed to delete events: ${failedIds}`)
+    }
 
     return { success: true }
   },
