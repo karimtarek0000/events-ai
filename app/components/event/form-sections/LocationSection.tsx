@@ -74,6 +74,7 @@ export function LocationSection() {
         <div className="space-y-2">
           <Label htmlFor="state">State/Province</Label>
           <Input id="state" placeholder="Enter state" {...register('state')} />
+          {errors.state && <p className="text-sm text-destructive">{errors.state.message}</p>}
         </div>
       </div>
     </div>
