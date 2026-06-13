@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import { Figtree, Geist, Geist_Mono } from 'next/font/google'
 import { Toaster } from 'sonner'
 import Header from './components/layout/Navbar'
+import ConfirmModal from './components/modal/ConfirmModal'
 import './globals.css'
 import { ConvexClientProvider } from './providers/ConvexClientProvider'
 
@@ -79,6 +80,7 @@ export default function RootLayout({
                 <div className="pointer-events-none absolute right-20 top-32 w-96 h-96 rounded-full opacity-80 bg-linear-to-tr from-green-400 via-green-300 to-transparent blur-[100px] -z-10" />
               </main>
               <Toaster position="top-center" />
+              <ConfirmModal />
             </ThemeProvider>
           </ConvexClientProvider>
         </ClerkProvider>
