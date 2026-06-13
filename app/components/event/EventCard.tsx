@@ -56,7 +56,10 @@ const EventCard = ({ event, isShow, pointerEvent, isEdit }: EventCardProps) => {
           </p>
           {isEdit && (
             <Button asChild>
-              <Link href={`/create-event`} className="hover:underline">
+              <Link
+                href={`/create-event?edit_event=${encodeURIComponent(JSON.stringify(event))}`}
+                className="hover:underline"
+              >
                 Edit
               </Link>
             </Button>
