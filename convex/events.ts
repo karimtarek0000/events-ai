@@ -205,8 +205,9 @@ export const deleteEvents = mutation({
   },
 })
 
-export const create = mutation({
+export const createAndUpdate = mutation({
   args: {
+    eventId: v.optional(v.id('events')),
     title: v.string(),
     description: v.string(),
     category: v.string(),
@@ -283,7 +284,8 @@ export const create = mutation({
     const now = Date.now()
 
     /* ---------- CREATE EVENT ---------- */
-    const eventId = await ctx.db.insert('events', {
+    let eventId = args.eventId ?? null
+    const body = {
       title: args.title,
       description: args.description,
       slug,
@@ -316,10 +318,16 @@ export const create = mutation({
 
       createdAt: now,
       updatedAt: now,
-    })
+    }
+
+    if (!args.eventId) {
+      eventId = await ctx.db.insert('events', body)
+    } else {
+      await ctx.db.patch(args.eventId, body)
+    }
 
     /* ---------- UPDATE COUNTER ---------- */
-    if (plan !== 'max') {
+    if (plan !== 'max' && !args.eventId) {
       await ctx.db.patch(user._id, {
         eventsCreatedCount: user.eventsCreatedCount + 1,
       })
