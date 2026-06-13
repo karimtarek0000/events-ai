@@ -25,7 +25,7 @@ const ConfirmModal = () => {
   }, [])
 
   return (
-    <AlertDialog open={toggle}>
+    <AlertDialog open={toggle} onOpenChange={setToggle}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure you want delete events?</AlertDialogTitle>
