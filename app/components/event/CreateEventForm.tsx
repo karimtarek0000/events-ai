@@ -29,18 +29,24 @@ import {
   zodResolver,
 } from './'
 
+const initialValues = { category: '', ticketType: '', startDate: '', endDate: '', locationType: '' }
+
 export default function CreateEventForm({ plan }: { plan: string }) {
   const router = useRouter()
+
   const searchParams = useSearchParams()
-  const event = JSON.parse(decodeURIComponent(searchParams.get('edit_event') as string)) ?? {}
+  const raw = searchParams.get('edit_event')
+  const event = raw ? JSON.parse(decodeURIComponent(raw)) : null
+
   const createEvent = useMutation(api.events.create)
+
   const [isPending, startTransition] = useTransition()
 
   const form = useForm<FormInput, unknown, FormOutput>({
     resolver: zodResolver(eventSchema),
     shouldUnregister: true,
     mode: 'onChange',
-    defaultValues: event,
+    values: event ?? initialValues,
   })
 
   const onSubmit = async (data: EventFormValues) => {
@@ -59,7 +65,7 @@ export default function CreateEventForm({ plan }: { plan: string }) {
         })
 
         router.push('/')
-        toast.success('Create a new event successfuly')
+        toast.success('Create a new event successfully')
       } catch (err) {
         const errorMessage = errorMessageHandle(err)
         toast.error(errorMessage)
