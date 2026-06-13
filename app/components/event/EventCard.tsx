@@ -3,6 +3,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { EventCardProps, TicketType } from '@/types/event.type'
 import Image from 'next/image'
 import Link from 'next/link'
+import { memo } from 'react'
 
 const EventCardBadge = ({ ticketType }: { ticketType: TicketType }) => {
   return ticketType === 'paid' && <Badge className="capitalize font-bold">{ticketType}</Badge>
@@ -65,4 +66,4 @@ const EventCard = ({ event, isShow = false, pointerEvent = false }: EventCardPro
   )
 }
 
-export default EventCard
+export default memo(EventCard)
