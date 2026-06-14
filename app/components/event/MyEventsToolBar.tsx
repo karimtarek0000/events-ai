@@ -18,7 +18,7 @@ const MyEventsToolBar = ({
 }: MyEventsToolBarProps) => {
   return (
     showComp && (
-      <div className="flex justify-between w-full my-10">
+      <div className="flex justify-between w-full mb-10 mt-20">
         <Button onClick={handleDeleteEvents} variant="destructive" disabled={isDisabled}>
           <Trash className=" text-white" />
         </Button>
