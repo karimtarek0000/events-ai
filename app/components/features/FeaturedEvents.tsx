@@ -7,7 +7,7 @@ export default async function FeaturedEvents() {
 
   return (
     <>
-      <h2 className="text-2xl font-bold my-8">⭐ Featured Events</h2>
+      <h2 className="heading-section">Featured Events</h2>
       <EventsList preloadedEvents={events} />
     </>
   )
