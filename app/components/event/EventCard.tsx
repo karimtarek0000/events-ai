@@ -1,11 +1,70 @@
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { EventCardProps, TicketType } from '@/types/event.type'
+import { Event, EventCardProps, TicketType } from '@/types/event.type'
 import { formatDateAndTime } from '@/utils/formatDate'
 import Image from 'next/image'
 import Link from 'next/link'
 import { memo } from 'react'
+
+const Decription = ({ show, description }: { show: boolean | undefined; description: string }) => {
+  return show && <p className="mb-5 min-h-[65px]">{description}</p>
+}
+
+const PhysicalDetails = ({
+  show,
+  physical,
+}: {
+  show: boolean | undefined
+  physical: { venue: string | undefined; address: string | undefined }
+}) => {
+  return (
+    show && (
+      <div className="capitalize flex flex-col mb-5">
+        <span>
+          <span className="me-5 font-bold">- venue:</span> {physical.venue}
+        </span>
+        <span>
+          <span className="me-2 font-bold">- address:</span> {physical.address}
+        </span>
+      </div>
+    )
+  )
+}
+
+const DateAndTime = ({
+  show,
+  date: { startDate, endDate },
+}: {
+  show: boolean | undefined
+  date: { startDate: number; endDate: number }
+}) => {
+  return (
+    show && (
+      <>
+        <div className="flex items-center flex-wrap justify-between mt-5 space-x-1">
+          <span>
+            <span className="me-2 font-bold">🗓 Start Date:</span>{' '}
+            {formatDateAndTime(startDate).date}
+          </span>
+          <span>
+            <span className="font-bold me-1">⌛️ Start Time:</span>{' '}
+            {formatDateAndTime(startDate).time}
+          </span>
+        </div>
+
+        <div className="flex items-center flex-wrap justify-between space-x-1">
+          <p>
+            <span className="me-4 font-bold">🗓 End Date:</span> {formatDateAndTime(endDate).date}
+          </p>
+          <p>
+            <span className="font-bold me-3">⌛️ End Time:</span> {formatDateAndTime(endDate).time}
+          </p>
+        </div>
+      </>
+    )
+  )
+}
 
 const TicketTypeBadge = ({ ticketType }: { ticketType: TicketType }) => {
   return ticketType === 'paid' && <Badge className="capitalize font-bold">{ticketType}</Badge>
@@ -21,18 +80,36 @@ const OtherBadge = ({ type }: { type: string | undefined }) => {
   )
 }
 
-const EventCardTags = ({ tags }: { tags: string[] }) => {
+const EventCardTags = ({ show, tags }: { show: boolean | undefined; tags: string[] }) => {
   return (
-    <CardFooter className="pt-0 mt-auto">
-      {tags?.map(tag => (
-        <Badge key={tag} variant="secondary" className="capitalize me-2 font-bold">
-          {tag}
-        </Badge>
-      ))}
-    </CardFooter>
+    show && (
+      <CardFooter className="pt-0 mt-auto">
+        {tags?.map(tag => (
+          <Badge key={tag} variant="secondary" className="capitalize me-2 font-bold">
+            {tag}
+          </Badge>
+        ))}
+      </CardFooter>
+    )
   )
 }
 
+const EditButton = ({ show, event }: { show: boolean | undefined; event: Event }) => {
+  return (
+    show && (
+      <Button asChild>
+        <Link
+          href={`/create-event?edit_event=${encodeURIComponent(JSON.stringify(event))}`}
+          className="hover:underline"
+        >
+          Edit
+        </Link>
+      </Button>
+    )
+  )
+}
+
+// Evant Card
 const EventCard = ({ event, isShow, pointerEvent }: EventCardProps) => {
   return (
     <Card
@@ -67,54 +144,35 @@ const EventCard = ({ event, isShow, pointerEvent }: EventCardProps) => {
       </CardHeader>
 
       <CardContent className="space-y-2 text-sm text-muted-foreground flex flex-col flex-1 justify-center">
-        {isShow?.description && <p className="mb-5 min-h-[65px]">{event.description}</p>}
+        <Decription show={isShow?.description} description={event.description} />
 
-        {isShow?.physical && event.locationType === 'physical' && (
-          <div className="capitalize flex flex-col mb-5">
-            <span>- venue: name</span>
-            <span>- address: name</span>
-          </div>
-        )}
+        <PhysicalDetails
+          show={isShow?.physical && event.locationType === 'physical'}
+          physical={{ venue: event.venue, address: event.address }}
+        />
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between font-bold">
           <p>
             📍 {event.city}, {event.country}
           </p>
-          {isShow?.edit && (
-            <Button asChild>
-              <Link
-                href={`/create-event?edit_event=${encodeURIComponent(JSON.stringify(event))}`}
-                className="hover:underline"
-              >
-                Edit
-              </Link>
-            </Button>
-          )}
+
+          <EditButton show={isShow?.edit} event={event} />
         </div>
 
-        {isShow?.date && (
-          <>
-            <div className="flex items-center flex-wrap justify-between mt-5 space-x-1">
-              <span>🗓 Start Date: {formatDateAndTime(event?.startDate).date}</span>
-              <span>⌛️ Start Time: {formatDateAndTime(event?.startDate).time}</span>
-            </div>
+        <DateAndTime
+          show={isShow?.date}
+          date={{ startDate: event?.startDate, endDate: event?.endDate }}
+        />
 
-            <div className="flex items-center flex-wrap justify-between space-x-1">
-              <p>🗓 End Date: {formatDateAndTime(event?.endDate).date}</p>
-              <p>⌛️ End Time: {formatDateAndTime(event?.endDate).time}</p>
-            </div>
-          </>
-        )}
-
-        <div className="flex items-center flex-wrap justify-between mt-5 space-x-1">
+        <div className="flex items-center flex-wrap justify-between mt-5 space-x-1 font-bold">
           <span>
             👥 {event.registrationCount} / {event.capacity || '?'} registered
           </span>
-          <span className="font-bold">$ {event?.ticketPrice ?? 0}</span>
+          <span>$ {event?.ticketPrice ?? 0}</span>
         </div>
       </CardContent>
 
-      {isShow?.tags && <EventCardTags tags={event?.tags as []} />}
+      <EventCardTags show={isShow?.tags} tags={event?.tags as []} />
     </Card>
   )
 }
