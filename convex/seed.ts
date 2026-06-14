@@ -113,6 +113,7 @@ export const seedEvents = internalMutation({
 
     if (!organizer) {
       const organizerId = await ctx.db.insert('users', {
+        clerkId: '',
         email: 'aievent@organizer.ai',
         tokenIdentifier: 'seed-organizer',
         name: 'AI Event Generator',

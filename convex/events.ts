@@ -18,6 +18,22 @@ export const getEvent = query({
   },
 })
 
+export const getEvents = query({
+  args: {},
+  handler: async ctx => {
+    const now = Date.now()
+
+    const events = await ctx.db
+      .query('events')
+      .withIndex('by_start_date')
+      .filter(q => q.gte(q.field('startDate'), now))
+      .order('desc')
+      .collect()
+
+    return events
+  },
+})
+
 export const getFeaturedEvents = query({
   args: {
     limit: v.optional(v.number()),
