@@ -9,8 +9,9 @@ export interface Event {
   title: string
   city: string
   country: string
-  ticketPrice: number
+  ticketPrice?: number | undefined
   description: string
+  locationType?: string
   category: string
   startDate: number
   endDate: number
@@ -19,12 +20,21 @@ export interface Event {
   capacity?: number
   ticketType: TicketType
   tags?: string[]
+  venue?: string
+  address?: string
 }
 
 export interface EventCardProps {
   event: Event
   pointerEvent?: boolean
-  isShow?: boolean
+  isShow?: {
+    tags?: boolean
+    description?: boolean
+    price?: boolean
+    physical?: boolean
+    edit?: boolean
+    date?: boolean
+  }
   isEdit?: boolean
 }
 
