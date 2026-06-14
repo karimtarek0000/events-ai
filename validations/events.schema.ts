@@ -27,14 +27,8 @@ export const eventSchema = z
     locationType: z.enum(['physical', 'online'], {
       error: 'Location type is required',
     }),
-    venue: z
-      .string()
-      .regex(/^[^0-9]*$/, 'Must not contain numbers')
-      .optional(),
-    address: z
-      .string()
-      .regex(/^[^0-9]*$/, 'Must not contain numbers')
-      .optional(),
+    venue: z.string().optional(),
+    address: z.string().optional(),
     city: z
       .string({ error: 'City is required' })
       .min(1, 'City cannot be empty')
