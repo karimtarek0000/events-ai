@@ -23,7 +23,7 @@ export function LocationSection() {
     <div className="space-y-4">
       <h3 className="text-lg font-semibold">Location</h3>
 
-      <div className="space-y-2">
+      <div className="space-y-2 *:w-full sm:*:w-[50%]">
         <Label>Location Type *</Label>
         <Controller
           control={control}
