@@ -9,8 +9,11 @@ export interface Event {
   title: string
   city: string
   country: string
+  ticketPrice: number
   description: string
+  category: string
   startDate: number
+  endDate: number
   registrationCount: number
   coverImage?: string
   capacity?: number
