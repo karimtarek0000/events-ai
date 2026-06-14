@@ -31,7 +31,7 @@ import {
 
 const initialValues = {
   category: '',
-  ticketType: '',
+  ticketType: 'free',
   startDate: '',
   endDate: '',
   locationType: '',
@@ -72,8 +72,10 @@ export default function EventForm({ plan }: { plan: string }) {
           themeColor: data.themeColor,
         })
 
-        router.push('/')
-        toast.success(`${event?._id ? 'Edit and event' : 'Create a new event'} successfully`)
+        router.push('/events')
+        toast.success(
+          `${event?._id ? 'Has been edit an event successfully' : 'Has been created a new event successfully, Check your email'} `,
+        )
       } catch (err) {
         const errorMessage = errorMessageHandle(err)
         toast.error(errorMessage)
