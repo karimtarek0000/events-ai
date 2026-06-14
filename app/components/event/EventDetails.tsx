@@ -1,11 +1,12 @@
-'use client'
-
-import { EventsListProps } from '@/types/event.type'
-import { usePreloadedQuery } from 'convex/react'
+import { Doc } from '@/convex/_generated/dataModel'
 import EventCard from '../event/EventCard'
 
-const EventsDetails = ({ preloadedEvents }: EventsListProps) => {
-  const event = usePreloadedQuery(preloadedEvents)
+interface EventsDetailsProps {
+  event: Doc<'events'> | null
+}
+
+const EventsDetails = ({ event }: EventsDetailsProps) => {
+  if (!event) return null
 
   return (
     <EventCard
