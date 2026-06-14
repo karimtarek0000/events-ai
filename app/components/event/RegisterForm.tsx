@@ -50,7 +50,7 @@ const RegisterForm = ({ eventId }: { eventId: Id<'events'> }) => {
 
   return (
     <>
-      <h2 className="text-2xl my-5 text-center">Register in this event</h2>
+      <h2 className="text-2xl my-5 text-center">Register in this event 🚀</h2>
 
       <form
         onSubmit={handleSubmit(onSubmit)}
