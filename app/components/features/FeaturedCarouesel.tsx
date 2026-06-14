@@ -5,9 +5,5 @@ import EventsList from '../event/EventsList'
 export default async function FeaturedCarouesel() {
   const events = await preloadQuery(api.events.getFeaturedEvents, { limit: 4 })
 
-  return (
-    <>
-      <EventsList preloadedEvents={events} slider />
-    </>
-  )
+  return <EventsList preloadedEvents={events} slider />
 }
