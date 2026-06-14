@@ -2,12 +2,23 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { EventCardProps, TicketType } from '@/types/event.type'
+import { formatDateAndTime } from '@/utils/formatDate'
 import Image from 'next/image'
 import Link from 'next/link'
 import { memo } from 'react'
 
-const EventCardBadge = ({ ticketType }: { ticketType: TicketType }) => {
+const TicketTypeBadge = ({ ticketType }: { ticketType: TicketType }) => {
   return ticketType === 'paid' && <Badge className="capitalize font-bold">{ticketType}</Badge>
+}
+
+const CategoryTypeBadge = ({ category }: { category: string }) => {
+  return (
+    category && (
+      <Badge variant="secondary" className="capitalize font-bold">
+        {category}
+      </Badge>
+    )
+  )
 }
 
 const EventCardTags = ({ tags }: { tags: string[] }) => {
@@ -25,8 +36,12 @@ const EventCardTags = ({ tags }: { tags: string[] }) => {
 const EventCard = ({ event, isShow, pointerEvent, isEdit }: EventCardProps) => {
   return (
     <Card
-      className={`${pointerEvent && 'pointer-events-none'} hover:shadow-lg p-0 pb-4 transition flex flex-col h-full`}
+      className={`${pointerEvent && 'pointer-events-none'} relative hover:shadow-lg p-0 pb-4 transition flex flex-col h-full`}
     >
+      <div className=" absolute top-2 inset-s-2 z-50">
+        <CategoryTypeBadge category={event.category} />
+      </div>
+
       <Link
         href={`/events/${event._id}`}
         className="block relative h-44 w-full bg-muted overflow-hidden rounded-t-xl"
@@ -45,7 +60,7 @@ const EventCard = ({ event, isShow, pointerEvent, isEdit }: EventCardProps) => {
         <Link href={`/events/${event._id}`} className="hover:underline">
           <CardTitle className="text-lg line-clamp-1">{event.title}</CardTitle>
         </Link>
-        <EventCardBadge ticketType={event.ticketType} />
+        <TicketTypeBadge ticketType={event.ticketType} />
       </CardHeader>
 
       <CardContent className="space-y-2 text-sm text-muted-foreground flex-1">
@@ -65,10 +80,22 @@ const EventCard = ({ event, isShow, pointerEvent, isEdit }: EventCardProps) => {
             </Button>
           )}
         </div>
-        <p>🗓 {new Date(event.startDate).toLocaleDateString()}</p>
-        <p>
-          👥 {event.registrationCount} / {event.capacity || '?'} registered
-        </p>
+        <div className="flex items-center flex-wrap justify-between mt-5 space-x-1">
+          <span>🗓 Start Date: {formatDateAndTime(event.startDate).date}</span>
+          <span>⌛️ Start Time: {formatDateAndTime(event.startDate).time}</span>
+        </div>
+
+        <div className="flex items-center flex-wrap justify-between space-x-1">
+          <p>🗓 End Date: {formatDateAndTime(event.endDate).date}</p>
+          <p>⌛️ End Time: {formatDateAndTime(event.endDate).time}</p>
+        </div>
+
+        <div className="flex items-center flex-wrap justify-between mt-5 space-x-1">
+          <span>
+            👥 {event.registrationCount} / {event.capacity || '?'} registered
+          </span>
+          <span className="font-bold">$ {event?.ticketPrice ?? 0}</span>
+        </div>
       </CardContent>
 
       {isShow && <EventCardTags tags={event?.tags as []} />}
