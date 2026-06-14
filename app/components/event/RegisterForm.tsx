@@ -1,5 +1,6 @@
 'use client'
 
+import { revalidateEvent } from '@/actions/event.actions'
 import {
   api,
   Button,
@@ -41,6 +42,7 @@ const RegisterForm = ({ eventId }: { eventId: Id<'events'> }) => {
         await registerEvent({ eventId, ...data })
         push('/events')
         toast.success('Registration done, See you there!')
+        revalidateEvent(eventId)
       } catch (err) {
         const errorMessage = errorMessageHandle(err)
         toast.error(errorMessage)
