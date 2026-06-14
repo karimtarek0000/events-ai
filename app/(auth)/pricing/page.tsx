@@ -2,7 +2,7 @@ import { PricingTable } from '@clerk/nextjs'
 
 export default async function Page() {
   return (
-    <section>
+    <section className="w-full h-full">
       <PricingTable />
     </section>
   )
