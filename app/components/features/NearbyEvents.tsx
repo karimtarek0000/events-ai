@@ -7,7 +7,7 @@ export default async function NearbyEvents() {
 
   return (
     <>
-      <h2 className="text-2xl font-bold my-8">⭐ Nearby Events</h2>
+      <h2 className="heading-section">Nearby Events</h2>
       <EventsList preloadedEvents={events} />
     </>
   )
