@@ -12,13 +12,13 @@ interface DeleteEventProps extends PropsWithChildren {
 
 const DeleteEventsCheckbox = ({ eventId, changeChecked, checked, children }: DeleteEventProps) => {
   return (
-    <div className="space-y-1">
+    <div className="space-y-2 mb-6">
       <Checkbox
         checked={checked}
         className="border-white"
         onCheckedChange={() => changeChecked(eventId)}
       />
-      <div>{children}</div>
+      <>{children}</>
     </div>
   )
 }
