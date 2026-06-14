@@ -40,7 +40,7 @@ const EventListMyEvent = ({ preloadedEvents }: EventListMyEventProps) => {
                 checked={ids.includes(event._id)}
                 changeChecked={handleChangeChecked}
               >
-                <EventCard event={event} isShow isEdit />
+                <EventCard event={event} isShow={{ tags: true, description: true, edit: true }} />
               </DeleteEventCheckbox>
             ))}
           </div>
