@@ -11,11 +11,11 @@ const TicketTypeBadge = ({ ticketType }: { ticketType: TicketType }) => {
   return ticketType === 'paid' && <Badge className="capitalize font-bold">{ticketType}</Badge>
 }
 
-const CategoryTypeBadge = ({ category }: { category: string }) => {
+const OtherBadge = ({ type }: { type: string | undefined }) => {
   return (
-    category && (
+    type && (
       <Badge variant="secondary" className="capitalize font-bold">
-        {category}
+        {type}
       </Badge>
     )
   )
@@ -33,13 +33,16 @@ const EventCardTags = ({ tags }: { tags: string[] }) => {
   )
 }
 
-const EventCard = ({ event, isShow, pointerEvent, isEdit }: EventCardProps) => {
+const EventCard = ({ event, isShow, pointerEvent }: EventCardProps) => {
   return (
     <Card
       className={`${pointerEvent && 'pointer-events-none'} relative hover:shadow-lg p-0 pb-4 transition flex flex-col h-full`}
     >
       <div className=" absolute top-2 inset-s-2 z-50">
-        <CategoryTypeBadge category={event.category} />
+        <OtherBadge type={event.category} />
+      </div>
+      <div className=" absolute top-2 inset-e-2 z-50">
+        <OtherBadge type={event.locationType} />
       </div>
 
       <Link
@@ -63,13 +66,21 @@ const EventCard = ({ event, isShow, pointerEvent, isEdit }: EventCardProps) => {
         <TicketTypeBadge ticketType={event.ticketType} />
       </CardHeader>
 
-      <CardContent className="space-y-2 text-sm text-muted-foreground flex-1">
-        {isShow && <p className="mb-5">{event.description}</p>}
+      <CardContent className="space-y-2 text-sm text-muted-foreground flex flex-col flex-1 justify-center">
+        {isShow?.description && <p className="mb-5 min-h-[65px]">{event.description}</p>}
+
+        {isShow?.physical && event.locationType === 'physical' && (
+          <div className="capitalize flex flex-col mb-5">
+            <span>- venue: name</span>
+            <span>- address: name</span>
+          </div>
+        )}
+
         <div className="flex items-center justify-between">
           <p>
             📍 {event.city}, {event.country}
           </p>
-          {isEdit && (
+          {isShow?.edit && (
             <Button asChild>
               <Link
                 href={`/create-event?edit_event=${encodeURIComponent(JSON.stringify(event))}`}
@@ -80,15 +91,20 @@ const EventCard = ({ event, isShow, pointerEvent, isEdit }: EventCardProps) => {
             </Button>
           )}
         </div>
-        <div className="flex items-center flex-wrap justify-between mt-5 space-x-1">
-          <span>🗓 Start Date: {formatDateAndTime(event.startDate).date}</span>
-          <span>⌛️ Start Time: {formatDateAndTime(event.startDate).time}</span>
-        </div>
 
-        <div className="flex items-center flex-wrap justify-between space-x-1">
-          <p>🗓 End Date: {formatDateAndTime(event.endDate).date}</p>
-          <p>⌛️ End Time: {formatDateAndTime(event.endDate).time}</p>
-        </div>
+        {isShow?.date && (
+          <>
+            <div className="flex items-center flex-wrap justify-between mt-5 space-x-1">
+              <span>🗓 Start Date: {formatDateAndTime(event?.startDate).date}</span>
+              <span>⌛️ Start Time: {formatDateAndTime(event?.startDate).time}</span>
+            </div>
+
+            <div className="flex items-center flex-wrap justify-between space-x-1">
+              <p>🗓 End Date: {formatDateAndTime(event?.endDate).date}</p>
+              <p>⌛️ End Time: {formatDateAndTime(event?.endDate).time}</p>
+            </div>
+          </>
+        )}
 
         <div className="flex items-center flex-wrap justify-between mt-5 space-x-1">
           <span>
@@ -98,7 +114,7 @@ const EventCard = ({ event, isShow, pointerEvent, isEdit }: EventCardProps) => {
         </div>
       </CardContent>
 
-      {isShow && <EventCardTags tags={event?.tags as []} />}
+      {isShow?.tags && <EventCardTags tags={event?.tags as []} />}
     </Card>
   )
 }
