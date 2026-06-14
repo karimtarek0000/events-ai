@@ -1,10 +1,11 @@
 'use client'
 
-import { Button, buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
-import { Image as IconPlaceholder } from 'lucide-react'
 import * as React from 'react'
 import { DayPicker, getDefaultClassNames, type DayButton, type Locale } from 'react-day-picker'
+
+import { Button, buttonVariants } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 
 function Calendar({
   className,
@@ -71,7 +72,7 @@ function Calendar({
             : 'flex items-center gap-1 rounded-(--cell-radius) text-sm [&>svg]:size-3.5 [&>svg]:text-muted-foreground',
           defaultClassNames.caption_label,
         ),
-        table: 'w-full border-collapse',
+        month_grid: 'w-full border-collapse',
         weekdays: cn('flex', defaultClassNames.weekdays),
         weekday: cn(
           'flex-1 rounded-(--cell-radius) text-[0.8rem] font-normal text-muted-foreground select-none',
@@ -117,44 +118,12 @@ function Calendar({
         },
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === 'left') {
-            return (
-              <IconPlaceholder
-                lucide="ChevronLeftIcon"
-                tabler="IconChevronLeft"
-                hugeicons="ArrowLeftIcon"
-                phosphor="CaretLeftIcon"
-                remixicon="RiArrowLeftSLine"
-                className={cn('size-4', className)}
-                {...props}
-              />
-            )
+            return <ChevronLeftIcon className={cn('size-4', className)} {...props} />
           }
-
           if (orientation === 'right') {
-            return (
-              <IconPlaceholder
-                lucide="ChevronRightIcon"
-                tabler="IconChevronRight"
-                hugeicons="ArrowRightIcon"
-                phosphor="CaretRightIcon"
-                remixicon="RiArrowRightSLine"
-                className={cn('size-4', className)}
-                {...props}
-              />
-            )
+            return <ChevronRightIcon className={cn('size-4', className)} {...props} />
           }
-
-          return (
-            <IconPlaceholder
-              lucide="ChevronDownIcon"
-              tabler="IconChevronDown"
-              hugeicons="ArrowDownIcon"
-              phosphor="CaretDownIcon"
-              remixicon="RiArrowDownSLine"
-              className={cn('size-4', className)}
-              {...props}
-            />
-          )
+          return <ChevronDownIcon className={cn('size-4', className)} {...props} />
         },
         DayButton: ({ ...props }) => <CalendarDayButton locale={locale} {...props} />,
         WeekNumber: ({ children, ...props }) => {
