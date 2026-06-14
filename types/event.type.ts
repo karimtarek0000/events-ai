@@ -35,7 +35,6 @@ export interface EventCardProps {
     edit?: boolean
     date?: boolean
   }
-  isEdit?: boolean
 }
 
 export interface EventsListProps {
