@@ -58,7 +58,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <section className="lg:w-[40vw] mx-auto flex flex-col gap-y-5">
       <EventDetails event={event} />
-      <RegisterForm eventId={id} />
+      <RegisterForm eventId={id} eventMount={event.ticketPrice} />
     </section>
   )
 }

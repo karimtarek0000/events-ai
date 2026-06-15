@@ -20,7 +20,31 @@ import {
   zodResolver,
 } from './'
 
-const RegisterForm = ({ eventId }: { eventId: Id<'events'> }) => {
+const TotalAmount = ({
+  registerCount,
+  eventMount = 0,
+}: {
+  registerCount: number
+  eventMount: number | undefined
+}) => {
+  return (
+    !!eventMount &&
+    !!registerCount && (
+      <p className="text-center mt-5">
+        Total of amount:
+        <span className="font-bold mx-2">
+          $
+          {(registerCount * eventMount).toLocaleString('en-US', {
+            maximumFractionDigits: 2,
+          })}
+        </span>
+        must be paid in the day of event
+      </p>
+    )
+  )
+}
+
+const RegisterForm = ({ eventId, eventMount }: { eventId: Id<'events'>; eventMount?: number }) => {
   const [isPending, startTransition] = useTransition()
   const { push } = useRouter()
 
@@ -29,12 +53,15 @@ const RegisterForm = ({ eventId }: { eventId: Id<'events'> }) => {
   const {
     handleSubmit,
     register,
+    watch,
     formState: { errors },
   } = useForm<RegisterInput, unknown, RegisterOutput>({
     resolver: zodResolver(registerSchema),
     mode: 'onChange',
     defaultValues: {},
   })
+
+  const registerCount = watch('registerCount') || 0
 
   const onSubmit = async (data: RegisterFormValues) => {
     startTransition(async () => {
@@ -80,6 +107,8 @@ const RegisterForm = ({ eventId }: { eventId: Id<'events'> }) => {
         {errors.registerCount && (
           <p className="text-sm text-destructive">{errors.registerCount.message}</p>
         )}
+
+        <TotalAmount eventMount={eventMount} registerCount={registerCount} />
 
         <Button type="submit" className="capitalize mt-5" disabled={isPending}>
           {isPending ? 'register event...' : 'register event'}
