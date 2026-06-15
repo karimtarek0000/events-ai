@@ -39,7 +39,7 @@ export default async function Header() {
             </div>
           )}
 
-          <div className="min-w-[28px] flex bg-red-500">
+          <div className="min-w-[28px] flex">
             <Show when="signed-out">
               <SignInButton>
                 <Button
