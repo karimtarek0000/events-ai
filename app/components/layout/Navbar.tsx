@@ -24,7 +24,7 @@ export default async function Header() {
         <SearchBar />
 
         {/* Right links */}
-        <div className="flex lg:min-w-61.75 justify-betwee max-md:order-2 items-center gap-4 text-sm text-white/80">
+        <div className="flex justify-between max-[577px]:order-2 items-center gap-4 text-sm text-white/80">
           <Link href="/pricing" className="hover:text-white">
             Pricing
           </Link>
@@ -38,23 +38,26 @@ export default async function Header() {
               </Link>
             </div>
           )}
-          <Show when="signed-out">
-            <SignInButton>
-              <Button
-                variant="outline"
-                className="bg-transparent text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer"
-              >
-                Signin
-              </Button>
-            </SignInButton>
-            <SignUpButton>
-              <Button className=" rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
-                Sign Up
-              </Button>
-            </SignUpButton>
-          </Show>
 
-          <UserMenu />
+          <div className="min-w-[28px] flex bg-red-500">
+            <Show when="signed-out">
+              <SignInButton>
+                <Button
+                  variant="outline"
+                  className="bg-transparent text-white rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer"
+                >
+                  Signin
+                </Button>
+              </SignInButton>
+              <SignUpButton>
+                <Button className=" rounded-full font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 cursor-pointer">
+                  Sign Up
+                </Button>
+              </SignUpButton>
+            </Show>
+
+            <UserMenu />
+          </div>
         </div>
       </div>
     </nav>
