@@ -1,6 +1,8 @@
 # EventRAI
 
-EventRAI is an event discovery and management web application built with modern React, Next.js, Clerk authentication, and Convex backend services.
+EventRAI is an event discovery and management web application built with FullStack modern React, Next.js, Clerk authentication, and Convex backend services.
+
+![alt text](<markdown-images/Screenshot 2026-06-16 at 7.48.59 PM.png>)
 
 ## Stack
 
@@ -11,8 +13,6 @@ EventRAI is an event discovery and management web application built with modern 
 - Convex for backend queries, mutations, and data storage
 - Tailwind CSS v4 + shadcn/ui component library
 - Radix UI, Lucide Icons, React Hook Form, Zod
-- Embla Carousel for event carousels
-- Sonner for toast notifications
 
 ## Folder Structure
 
