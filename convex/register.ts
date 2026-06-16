@@ -49,6 +49,7 @@ export const registerForEvent = mutation({
     attendeeName: v.string(),
     attendeeEmail: v.string(),
     registerCount: v.number(),
+    totalAmount: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
     // 1. Check duplicate
@@ -71,6 +72,7 @@ export const registerForEvent = mutation({
       attendeeName: args.attendeeName,
       attendeeEmail: args.attendeeEmail,
       registerCount: args.registerCount,
+      totalAmount: args.totalAmount,
     })
 
     if (args.registerCount > event.capacity - event.registrationCount) {

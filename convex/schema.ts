@@ -71,12 +71,12 @@ export default defineSchema({
     .index('by_slug', ['slug'])
     .searchIndex('search_title', { searchField: 'title' }),
 
-  // Registrations/Tickets
   registrations: defineTable({
     eventId: v.id('events'),
     attendeeName: v.string(),
     attendeeEmail: v.string(),
     registerCount: v.number(),
+    totalAmount: v.optional(v.number()),
   })
     .index('by_event', ['eventId'])
     .index('by_event_and_email', ['eventId', 'attendeeEmail']),
