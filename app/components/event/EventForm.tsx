@@ -1,5 +1,8 @@
 'use client'
 
+import { revalidateEvent } from '@/actions/event.actions'
+import { isEqual } from 'lodash-es'
+import { useMemo } from 'react'
 import {
   api,
   Badge,
@@ -42,7 +45,7 @@ export default function EventForm({ plan }: { plan: string }) {
 
   const searchParams = useSearchParams()
   const raw = searchParams.get('edit_event')
-  const event = raw ? JSON.parse(decodeURIComponent(raw)) : null
+  const event = useMemo(() => (raw ? JSON.parse(decodeURIComponent(raw)) : null), [raw])
 
   const createEvent = useMutation(api.events.createAndUpdate)
 
@@ -54,6 +57,12 @@ export default function EventForm({ plan }: { plan: string }) {
     mode: 'onChange',
     values: event ?? initialValues,
   })
+  const currentValues = form.watch()
+
+  const isDirty = !isEqual(
+    currentValues,
+    Object.fromEntries(Object.keys(currentValues).map(key => [key, event?.[key]])),
+  )
 
   const onSubmit = async (data: EventFormValues) => {
     startTransition(async () => {
@@ -76,6 +85,9 @@ export default function EventForm({ plan }: { plan: string }) {
         toast.success(
           `${event?._id ? 'Has been edit an event successfully' : 'Has been created a new event successfully, Check your email'} `,
         )
+        if (event?._id) {
+          revalidateEvent(event._id)
+        }
       } catch (err) {
         const errorMessage = errorMessageHandle(err)
         toast.error(errorMessage)
@@ -113,7 +125,11 @@ export default function EventForm({ plan }: { plan: string }) {
               <CustomizationSection />
 
               <div className="flex gap-4 pt-4">
-                <Button type="submit" disabled={isPending} className="flex-1 capitalize">
+                <Button
+                  type="submit"
+                  disabled={isPending || !isDirty}
+                  className="flex-1 capitalize"
+                >
                   {isPending
                     ? `${event?._id ? 'editing event' : 'creating event'}...`
                     : `${event?._id ? 'edit event' : 'create event'}`}
