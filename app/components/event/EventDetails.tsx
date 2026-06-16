@@ -13,6 +13,7 @@ const EventsDetails = ({ event }: EventsDetailsProps) => {
       event={event}
       pointerEvent
       isShow={{ tags: true, description: true, physical: true, date: true }}
+      isPriority
     />
   )
 }

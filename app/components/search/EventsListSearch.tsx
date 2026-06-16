@@ -18,8 +18,13 @@ export const EventsListSearch = () => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {events.map(event => (
-        <EventCard key={event._id} event={event} isShow={{ description: true, date: true }} />
+      {events.map((event, i) => (
+        <EventCard
+          key={event._id}
+          event={event}
+          isShow={{ description: true, date: true }}
+          isPriority={i < 3}
+        />
       ))}
     </div>
   )
