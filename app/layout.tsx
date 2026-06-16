@@ -43,6 +43,10 @@ export const metadata: Metadata = {
     title: 'EventRAI',
     description: 'Event discovery, AI-powered recommendations, and seamless event management.',
   },
+  other: {
+    'http-equiv': 'x-dns-prefetch-control',
+    preconnect: 'https://images.unsplash.com/',
+  },
 }
 
 export const viewport: Viewport = {
