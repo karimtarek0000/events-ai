@@ -27,14 +27,12 @@ export async function POST(req: NextRequest) {
 
     const items = data?.items ?? []
 
-    // الـ upcoming هو الـ plan الجديد عند الـ upgrade
     const upcomingItem = items
       .filter((item: any) => item?.status === 'upcoming')
       .sort(
         (a: any, b: any) => (PLAN_ORDER[b?.plan?.slug] ?? 0) - (PLAN_ORDER[a?.plan?.slug] ?? 0),
       )[0]
 
-    // fallback للـ active لو مفيش upcoming
     const activeItem = items
       .filter((item: any) => item?.status === 'active')
       .sort(
