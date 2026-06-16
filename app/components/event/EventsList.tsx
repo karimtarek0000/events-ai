@@ -29,8 +29,13 @@ const EventsList = ({ preloadedEvents, slider }: EventsListProps) => {
   return (
     <NotFound records={events}>
       <section className="event-list-wrapper">
-        {events?.map(event => (
-          <EventCard key={event._id} event={event} isShow={{ tags: true, description: true }} />
+        {events?.map((event, i) => (
+          <EventCard
+            key={event._id}
+            event={event}
+            isShow={{ tags: true, description: true }}
+            isPriority={i < 3}
+          />
         ))}
       </section>
     </NotFound>

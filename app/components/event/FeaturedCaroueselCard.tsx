@@ -31,7 +31,7 @@ function FeaturedCaroueselCard({ events }: { events: Event[] }) {
                     alt={event.title}
                     fill
                     className="object-cover"
-                    loading={i == 0 ? 'eager' : 'lazy'}
+                    priority={i < 2}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
 

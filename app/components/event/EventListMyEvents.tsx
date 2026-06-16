@@ -30,14 +30,18 @@ const EventListMyEvent = ({ preloadedEvents }: EventListMyEventProps) => {
 
       <NotFound records={events}>
         <section className="event-list-wrapper">
-          {events?.map(event => (
+          {events?.map((event, i) => (
             <DeleteEventCheckbox
               key={event._id}
               eventId={event._id}
               checked={ids.includes(event._id)}
               changeChecked={handleChangeChecked}
             >
-              <EventCard event={event} isShow={{ tags: true, description: true, edit: true }} />
+              <EventCard
+                event={event}
+                isShow={{ tags: true, description: true, edit: true }}
+                isPriority={i < 3}
+              />
             </DeleteEventCheckbox>
           ))}
         </section>

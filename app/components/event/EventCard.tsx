@@ -110,7 +110,7 @@ const EditButton = ({ show, event }: { show: boolean | undefined; event: Event }
 }
 
 // Evant Card
-const EventCard = ({ event, isShow, pointerEvent }: EventCardProps) => {
+const EventCard = ({ event, isShow, pointerEvent, isPriority }: EventCardProps) => {
   return (
     <Card
       className={`${pointerEvent && 'pointer-events-none'} relative hover:shadow-lg p-0 pb-4 transition flex flex-col`}
@@ -129,8 +129,8 @@ const EventCard = ({ event, isShow, pointerEvent }: EventCardProps) => {
         <Image
           src={event.coverImage || '/placeholder-event.jpg'}
           alt={event.title || ''}
-          loading="eager"
           fill
+          priority={isPriority}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover hover:scale-105 transition-transform duration-500"
         />
