@@ -27,6 +27,7 @@ export interface Event {
 export interface EventCardProps {
   event: Event
   pointerEvent?: boolean
+  isPriority: boolean
   isShow?: {
     tags?: boolean
     description?: boolean
