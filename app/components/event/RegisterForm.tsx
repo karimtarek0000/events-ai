@@ -22,10 +22,10 @@ import {
 
 const TotalAmount = ({
   registerCount,
-  eventMount = 0,
+  eventMount,
 }: {
   registerCount: number
-  eventMount: number | undefined
+  eventMount: number
 }) => {
   return (
     !!eventMount &&
@@ -44,7 +44,13 @@ const TotalAmount = ({
   )
 }
 
-const RegisterForm = ({ eventId, eventMount }: { eventId: Id<'events'>; eventMount?: number }) => {
+const RegisterForm = ({
+  eventId,
+  eventMount = 0,
+}: {
+  eventId: Id<'events'>
+  eventMount?: number
+}) => {
   const [isPending, startTransition] = useTransition()
   const { push } = useRouter()
 
@@ -62,11 +68,12 @@ const RegisterForm = ({ eventId, eventMount }: { eventId: Id<'events'>; eventMou
   })
 
   const registerCount = watch('registerCount') || 0
+  const totalAmount = registerCount * eventMount
 
   const onSubmit = async (data: RegisterFormValues) => {
     startTransition(async () => {
       try {
-        await registerEvent({ eventId, ...data })
+        await registerEvent({ eventId, totalAmount, ...data })
         push('/events')
         toast.success('Registration done, See you there!')
         revalidateEvent(eventId)
