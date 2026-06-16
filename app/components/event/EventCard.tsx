@@ -113,7 +113,7 @@ const EditButton = ({ show, event }: { show: boolean | undefined; event: Event }
 const EventCard = ({ event, isShow, pointerEvent }: EventCardProps) => {
   return (
     <Card
-      className={`${pointerEvent && 'pointer-events-none'} relative hover:shadow-lg p-0 pb-4 transition flex flex-col h-full`}
+      className={`${pointerEvent && 'pointer-events-none'} relative hover:shadow-lg p-0 pb-4 transition flex flex-col`}
     >
       <div className=" absolute top-2 inset-s-2 z-50">
         <OtherBadge type={event.category} />
