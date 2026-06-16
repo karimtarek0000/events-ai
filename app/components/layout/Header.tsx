@@ -24,7 +24,7 @@ export default function Hero() {
 
         {/* RIGHT IMAGE */}
         <div className="relative flex justify-center">
-          <div className="relative min-h-[480px] w-70 md:w-85">
+          <div className="relative min-h-120 w-70 md:w-85">
             <Image
               src="/hero.png"
               alt="Event App Preview"

@@ -17,7 +17,7 @@ export default async function Header() {
       <div className="container mx-auto mx-auto max-md:*:basis-2/12 flex flex-wrap items-center justify-between">
         {/* Logo */}
         <Link href="/" className=" shrink-0">
-          <Image loading="eager" alt="image" width={90} height={90} src="/logo.png" sizes="100px" />
+          <Image priority alt="image" width={90} height={90} src="/logo.png" sizes="100px" />
         </Link>
 
         {/* Search + Filters (desktop only) */}
